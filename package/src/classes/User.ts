@@ -100,7 +100,7 @@ export class User {
             : `${this.username}#${this.discriminator}`;
     }
 
-    /** @returns Mention string for the user, e.g. <@123456789> */
+    /** @returns Mention string for the user, e.g. <@USERID> */
     public toString(): string {
         return `<@${this.id}>`;
     }

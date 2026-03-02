@@ -1,6 +1,5 @@
 import type { APIMessage } from "discord-api-types/v10";
 import { Client } from "@/classes/Client";
-import { GuildsError } from "@/classes/GuildsError";
 
 /**
  * Class representing a Discord message
@@ -27,7 +26,7 @@ export class Message {
      */
     public constructor(client: Client, data: APIMessage) {
         if (!client || !(client instanceof Client)) {
-            throw new GuildsError("Invalid client provided", "DiscordAPIError");
+            throw new TypeError("Invalid client provided");
         }
 
         this.client = client;

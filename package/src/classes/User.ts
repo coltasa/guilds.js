@@ -2,7 +2,6 @@ import type { APIUser } from "discord-api-types/v10";
 import type { AvatarURLProps } from "@/types";
 import { Client } from "@/classes/Client";
 import { colorIntToHex } from "@/functions/color-convert";
-import { GuildsError } from "@/classes/GuildsError";
 
 /**
  * Class representing a Discord user
@@ -47,7 +46,7 @@ export class User {
      */
     public constructor(client: Client, data: APIUser) {
         if (!client || !(client instanceof Client)) {
-            throw new GuildsError("Invalid client provided", "DiscordAPIError");
+            throw new TypeError("Invalid client provided");
         }
 
         this.accentColor = data.accent_color ?? undefined;
@@ -75,10 +74,7 @@ export class User {
             !props.size ||
             (props.format && typeof props.format !== "string")
         ) {
-            throw new GuildsError(
-                "Invalid user avatar URL props provided",
-                "DiscordAPIError"
-            );
+            throw new TypeError("Invalid user avatar URL props provided");
         }
 
         const avatarHash = this.rawData.avatar;

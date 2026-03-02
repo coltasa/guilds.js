@@ -1,5 +1,5 @@
-import type { Client } from "@/classes/Client";
 import type { GatewayPayload } from "@/types";
+import { Client } from "@/classes/Client";
 import { Message } from "@/classes/Message";
 
 /**
@@ -8,6 +8,10 @@ import { Message } from "@/classes/Message";
  * @param payload Gateway payload data
  */
 export function handleGatewayEvents(client: Client, payload: GatewayPayload): void {
+    if (!client || !(client instanceof Client)) {
+        throw new TypeError("Invalid client provided");
+    }
+
     switch (payload.t) {
         case "MESSAGE_CREATE": {
             const message = new Message(client, payload.d);

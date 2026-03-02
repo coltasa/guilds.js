@@ -1,6 +1,5 @@
 import type { APIGuild } from "discord-api-types/v10";
 import { Client } from "@/classes/Client";
-import { GuildsError } from "@/classes/GuildsError";
 
 /**
  * Class representing a Discord guild (i.e. "server" in the UI)
@@ -27,7 +26,7 @@ export class Guild {
      */
     public constructor(client: Client, data: APIGuild) {
         if (!client || !(client instanceof Client)) {
-            throw new GuildsError("Invalid client provided", "DiscordAPIError");
+            throw new TypeError("Invalid client provided");
         }
 
         this.client = client;

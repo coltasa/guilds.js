@@ -51,17 +51,30 @@ jobs:
 
             - name: Deprecate previous dev version
               run: |
-                  PKG_NAME=$(node -p "require('./package/package.json').name")
-                  PREV_VERSION=$(npm view "$PKG_NAME" versions --json \
-                    | node -e "
-                        const versions = JSON.parse(require('node:fs').readFileSync(0,'utf8'));
-                        const devs = versions.filter((version) => version.includes('-dev.'));
-                        const prev = devs.filter((version) => version !== process.env.NEW_VERSION).pop();
-                        if (prev) { console.log(prev); }
-                      ")
-                  if [ -n "$PREV_VERSION" ]; then
-                    npm deprecate "$PKG_NAME@$PREV_VERSION" "outdated dev build"
-                  fi
+                  node --input-type=module << 'EOF'
+                  import { readFile } from 'node:fs/promises';
+                  import { execSync } from 'node:child_process';
+
+                  const pkgPath = './package/package.json';
+                  const pkgJson = await readFile(pkgPath, 'utf8');
+                  const pkg = JSON.parse(pkgJson);
+                  const pkgName = pkg.name;
+
+                  const { stdout } = await execSync(`pnpm view "${pkgName}" versions --json`, { encoding: 'utf8' });
+                  const versions = JSON.parse(stdout);
+                  const devs = versions.filter((version) => version.includes('-dev.'));
+                  const newVersion = process.env.NEW_VERSION;
+                  const prev = devs.filter((version) => version !== newVersion).pop();
+
+                  if (prev) {
+                    console.log(`Deprecating ${pkgName}@${prev}`);
+
+                    execSync(`pnpm deprecate "${pkgName}@${prev}" "outdated dev build"`, { 
+                      encoding: 'utf8',
+                      env: { ...process.env, NODE_AUTH_TOKEN: process.env.NODE_AUTH_TOKEN },
+                    });
+                  }
+                  EOF
               env:
                   NEW_VERSION: ${{ env.DEV_VERSION }}
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

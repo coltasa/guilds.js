@@ -9,6 +9,7 @@ import { handleGatewayEvents } from "@/functions/gateway-events";
 import { Message } from "@/classes/Message";
 import { parseIntents } from "@/functions/parse-intents";
 import { RESTManager } from "@/classes/RESTManager";
+import { Role } from "@/classes/Role";
 import { TextChannel } from "@/classes/TextChannel";
 import { User } from "@/classes/User";
 import { VoiceChannel } from "@/classes/VoiceChannel";
@@ -80,6 +81,7 @@ export class Client extends EventHandler<ClientEvents> {
         channels: new CacheManager<AnyChannel>(),
         guilds: new CacheManager<Guild>(),
         messages: new CacheManager<Message>(),
+        roles: new CacheManager<Role>(),
         users: new CacheManager<User>(),
     };
 
@@ -304,23 +306,23 @@ export class Client extends EventHandler<ClientEvents> {
 
     /**
      * Fetch a channel by its ID
-     * @param id ID of the channel to fetch
+     * @param channelId ID of the channel to fetch
      * @param options Fetch options
      * @returns Channel object or null
      */
     public async fetchChannel<T extends AnyChannel = Channel>(
-        id: string,
+        channelId: string,
         options: ClientStructureFetchOptions = { force: false }
     ): Promise<T | null> {
         if (!options?.force) {
-            const cached = this.cache.channels.get(id);
+            const cached = this.cache.channels.get(channelId);
 
             if (cached) {
                 return cached as T;
             }
         }
 
-        const res = await this.rest.get(Endpoints.channel(id));
+        const res = await this.rest.get(Endpoints.channel(channelId));
 
         if (!res.ok) {
             return null;
@@ -357,65 +359,96 @@ export class Client extends EventHandler<ClientEvents> {
             channel = new Channel(this, res.data);
         }
 
-        this.cache.channels.set(id, channel);
+        this.cache.channels.set(channelId, channel);
         return channel as T;
     }
 
     /**
      * Fetches a guild by its ID
-     * @param id ID of the guild to fetch
+     * @param guildId ID of the guild to fetch
      * @param options Fetch options
      * @returns Guild object or null
      */
     public async fetchGuild(
-        id: string,
+        guildId: string,
         options: ClientStructureFetchOptions = { force: false }
     ): Promise<Guild | null> {
         if (!options?.force) {
-            const cached = this.cache.guilds.get(id);
+            const cached = this.cache.guilds.get(guildId);
 
             if (cached) {
                 return cached;
             }
         }
 
-        const res = await this.rest.get(Endpoints.guild(id));
+        const res = await this.rest.get(Endpoints.guild(guildId));
 
         if (!res.ok) {
             return null;
         }
 
         const guild = new Guild(this, res.data);
-        this.cache.guilds.set(id, guild);
+        this.cache.guilds.set(guildId, guild);
         return guild;
     }
 
     /**
-     * Fetches a user by their ID
-     * @param id ID of the user to fetch (default: "@me")
+     * Fetches a role by its ID and guild ID
+     * @param guildId ID of the guild where the role belongs
+     * @param roleId ID of the role to fetch
      * @param options Fetch options
-     * @returns User object or null
+     * @returns Role object or null
      */
-    public async fetchUser(
-        id: string = "@me",
+    public async fetchRole(
+        guildId: string,
+        roleId: string,
         options: ClientStructureFetchOptions = { force: false }
-    ): Promise<User | null> {
+    ): Promise<Role | null> {
         if (!options?.force) {
-            const cached = this.cache.users.get(id);
+            const cached = this.cache.roles.get(roleId);
 
             if (cached) {
                 return cached;
             }
         }
 
-        const res = await this.rest.get(Endpoints.user(id));
+        const res = await this.rest.get(Endpoints.guildRole(guildId, roleId));
+
+        if (!res.ok) {
+            return null;
+        }
+
+        const role = new Role(this, res.data);
+        this.cache.roles.set(roleId, role);
+        return role;
+    }
+
+    /**
+     * Fetches a user by their ID
+     * @param userId ID of the user to fetch (default: "@me")
+     * @param options Fetch options
+     * @returns User object or null
+     */
+    public async fetchUser(
+        userId: string = "@me",
+        options: ClientStructureFetchOptions = { force: false }
+    ): Promise<User | null> {
+        if (!options?.force) {
+            const cached = this.cache.users.get(userId);
+
+            if (cached) {
+                return cached;
+            }
+        }
+
+        const res = await this.rest.get(Endpoints.user(userId));
 
         if (!res.ok) {
             return null;
         }
 
         const user = new User(this, res.data);
-        this.cache.users.set(id, user);
+        this.cache.users.set(userId, user);
         return user;
     }
 

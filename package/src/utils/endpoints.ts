@@ -50,6 +50,23 @@ export const Endpoints = {
     },
 
     /**
+     * - GET `/guilds/{guildId}/roles`
+     * @param guildId Guild ID
+     */
+    guildRoles(guildId: string) {
+        return `${baseApiUrl}/guilds/${guildId}/roles` as const;
+    },
+
+    /**
+     * - GET `/guilds/{guildId}/roles/{roleId}`
+     * @param guildId Guild ID
+     * @param roleId Role ID
+     */
+    guildRole(guildId: string, roleId: string) {
+        return `${Endpoints.guildRoles(guildId)}/${roleId}` as const;
+    },
+
+    /**
      * - GET `/users/{userId}`
      * @param userId User ID (default: "@me")
      */

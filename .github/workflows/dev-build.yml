@@ -49,31 +49,60 @@ jobs:
                   import { readFile } from 'node:fs/promises';
                   import { execSync } from 'node:child_process';
 
-                  const pkgJson = await readFile('./package/package.json', 'utf8');
-                  const { name: pkgName } = JSON.parse(pkgJson);
-                  const stdout = execSync(`pnpm view "${pkgName}" versions --json`, { encoding: 'utf8' })
+                  try {
+                    // const pkgJson = await readFile('./package/package.json', 'utf8');
+                    // const { name: pkgName } = JSON.parse(pkgJson);
+                    const pkgName = "guilds.js";
 
-                  await new Promise(resolve => setTimeout(resolve, 3000));
+                    const stdout = execSync(
+                      `pnpm view ${pkgName} versions --json`,
+                      { encoding: 'utf8' }
+                    );
 
-                  console.log('Raw stdout:', stdout);
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    const versions = JSON.parse(stdout);
 
-                  if (!stdout || !stdout.trim()) {
-                    console.log('No development version to deprecate.');
-                    process.exit(0);
-                  }
+                    if (!versions || !stdout.trim()) {
+                      console.log('No versions were found.');
+                      process.exit(0);
+                    }
 
-                  const versions = JSON.parse(stdout);
-                  const devVersions = versions.filter((version) => version.includes('-dev.'));
-                  const newVersion = process.env.NEW_VERSION;
-                  const prev = devVersions.filter((version) => version !== newVersion).pop();
+                    const devVersions = versions
+                      .filter(v => /^0\.0\.0-dev\.\d{12}$/.test(v))
+                      .sort();
 
-                  if (prev) {
-                    console.log(`Deprecating ${pkgName}@${prev}`);
+                    if (devVersions.length === 0) {
+                      console.log('No development versions to deprecate.');
+                      process.exit(0);
+                    }
 
-                    execSync(`pnpm deprecate "${pkgName}@${prev}" "outdated dev build"`, { 
-                      encoding: 'utf8',
-                      env: { ...process.env, NODE_AUTH_TOKEN: process.env.NODE_AUTH_TOKEN },
-                    });
+                    const currentVersion = process.env.NEW_VERSION;
+                    const latestDevVersion = devVersions[devVersions.length - 1];
+                    const deprecatedVersion =
+                      latestDevVersion === currentVersion
+                        ? devVersions[devVersions.length - 2]
+                        : latestDevVersion;
+
+                    if (!deprecatedVersion) {
+                      console.log('No previous development version to deprecate.');
+                      process.exit(0);
+                    }
+
+                    console.log(`Deprecating ${pkgName}@${deprecatedVersion}...`);
+                    execSync(
+                      `pnpm deprecate "${pkgName}@${deprecatedVersion}" "outdated dev build"`,
+                      {
+                        stdio: 'inherit',
+                        env: {
+                          ...process.env,
+                          NODE_AUTH_TOKEN: process.env.NODE_AUTH_TOKEN,
+                        },
+                      }
+                    );
+
+                  } catch (error) {
+                    console.error(`Error deprecating development version: ${error.message ?? error}`);
+                    process.exit(1);
                   }
 
                   EOF

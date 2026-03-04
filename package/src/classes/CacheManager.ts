@@ -7,11 +7,15 @@ export class CacheManager<T> {
      */
     #cache = new Map<string, T>();
 
+    /**
+     * Timestamps for TTL tracking
+     * @internal
+     * @private
+     */
+    #timestamps = new Map<string, number>();
+
     /** Time to live in milliseconds for cached items */
     public ttl?: number;
-
-    /** Timestamps for TTL tracking */
-    public timestamps = new Map<string, number>();
 
     /**
      * Set the time to live for cache entries
@@ -28,7 +32,7 @@ export class CacheManager<T> {
      */
     public get(key: string): T | undefined {
         if (this.ttl) {
-            const timestamp = this.timestamps.get(key);
+            const timestamp = this.#timestamps.get(key);
 
             if (timestamp && Date.now() - timestamp > this.ttl) {
                 this.delete(key);
@@ -49,7 +53,7 @@ export class CacheManager<T> {
         this.#cache.set(key, value);
 
         if (this.ttl) {
-            this.timestamps.set(key, Date.now());
+            this.#timestamps.set(key, Date.now());
         }
 
         return this;
@@ -62,7 +66,7 @@ export class CacheManager<T> {
      */
     public has(key: string): boolean {
         if (this.ttl) {
-            const timestamp = this.timestamps.get(key);
+            const timestamp = this.#timestamps.get(key);
 
             if (timestamp && Date.now() - timestamp > this.ttl) {
                 this.delete(key);
@@ -79,14 +83,14 @@ export class CacheManager<T> {
      * @returns True if key was deleted, false if it didn't exist
      */
     public delete(key: string): boolean {
-        this.timestamps.delete(key);
+        this.#timestamps.delete(key);
         return this.#cache.delete(key);
     }
 
     /** Clear all entries from the cache */
     public clear(): void {
         this.#cache.clear();
-        this.timestamps.clear();
+        this.#timestamps.clear();
     }
 
     /** Number of entries in the cache */

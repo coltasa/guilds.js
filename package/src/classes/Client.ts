@@ -93,10 +93,7 @@ export class Client extends EventHandler<TypeMappedClientEvents> {
         super();
 
         if (!props || typeof props !== "object") {
-            throw new GuildsError(
-                "Invalid client props provided",
-                "ClientPropsError"
-            );
+            throw new GuildsError("Invalid client props provided", "ClientPropsError");
         }
 
         if (!props.token || typeof props.token !== "string") {
@@ -106,8 +103,7 @@ export class Client extends EventHandler<TypeMappedClientEvents> {
         if (
             props.intents === null ||
             props.intents === undefined ||
-            (Array.isArray(props.intents) == false &&
-                typeof props.intents !== "number")
+            (Array.isArray(props.intents) == false && typeof props.intents !== "number")
         ) {
             throw new GuildsError("Invalid intents provided", "ClientIntentsError");
         }
@@ -476,17 +472,15 @@ export class Client extends EventHandler<TypeMappedClientEvents> {
                         status: this.presence.status,
                         since: null,
                         afk: false,
-                        activities: (this.presence.activities ?? []).map(
-                            (activity) => ({
-                                ...activity,
-                                type:
-                                    typeof activity.type === "string"
-                                        ? ActivityTypes[
-                                              activity.type as keyof typeof ActivityTypes
-                                          ]
-                                        : activity.type,
-                            })
-                        ),
+                        activities: (this.presence.activities ?? []).map((activity) => ({
+                            ...activity,
+                            type:
+                                typeof activity.type === "string"
+                                    ? ActivityTypes[
+                                          activity.type as keyof typeof ActivityTypes
+                                      ]
+                                    : activity.type,
+                        })),
                     },
                 })
             );

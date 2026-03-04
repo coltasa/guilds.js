@@ -26,23 +26,6 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Generate development version
-              id: version
-              run: |
-                  DEV_VERSION="0.0.0-dev.$(date -u +%Y%m%d%H%M)"
-                  echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_ENV
-                  echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_OUTPUT
-                  node -e "
-                    const fs = require('node:fs');
-                    const pkgPath = './package/package.json';
-                    const pkg = require(pkgPath);
-                    pkg.version = '$DEV_VERSION';
-                    fs.writeFileSync(pkgPath, JSON.stringify(pkg,null,2));
-                  "
-
-            - name: Transpile package
-              run: pnpm build --filter guilds.js
-
             - name: Deprecate previous dev version
               run: |
                   node --input-type=module << 'EOF'
@@ -109,6 +92,20 @@ jobs:
               env:
                   NEW_VERSION: ${{ env.DEV_VERSION }}
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Generate development version
+              id: version
+              run: |
+                  DEV_VERSION="0.0.0-dev.$(date -u +%Y%m%d%H%M)"
+                  echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_ENV
+                  echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_OUTPUT
+                  node -e "
+                    const fs = require('node:fs');
+                    const pkgPath = './package/package.json';
+                    const pkg = require(pkgPath);
+                    pkg.version = '$DEV_VERSION';
+                    fs.writeFileSync(pkgPath, JSON.stringify(pkg,null,2));
+                  "
 
             - name: Publish package
               working-directory: package

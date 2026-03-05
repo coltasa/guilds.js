@@ -1,5 +1,5 @@
 import type { APIGuild } from "discord-api-types/v10";
-import { Client } from "@/classes/Client";
+import { Client } from "@/classes/client";
 
 /**
  * Class representing a Discord guild (known as a "server" in the UI)

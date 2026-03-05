@@ -1,6 +1,6 @@
 import type { IntentsResolvable } from "@/types";
 import { GatewayIntents } from "@/utils/constants";
-import { GuildsError } from "@/classes/GuildsError";
+import { GuildsError } from "@/classes/guilds-error";
 
 /**
  * Resolves intents into one bitfield

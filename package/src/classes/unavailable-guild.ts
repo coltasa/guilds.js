@@ -1,5 +1,5 @@
 import type { APIUnavailableGuild } from "discord-api-types/v10";
-import { Client } from "@/classes/Client";
+import { Client } from "@/classes/client";
 
 /**
  * Class representing a Guild unavailable due to a Discord outage

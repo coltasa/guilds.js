@@ -1,5 +1,5 @@
 import type { HTTPRequestMethod } from "@/types";
-import { GuildsError } from "@/classes/GuildsError";
+import { GuildsError } from "@/classes/guilds-error";
 
 /** Simple REST wrapper for interacting with Discord's v10 HTTP API */
 export class RESTManager {

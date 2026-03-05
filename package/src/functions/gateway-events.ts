@@ -1,7 +1,7 @@
 import type { GatewayPayload } from "@/types";
-import { Client } from "@/classes/Client";
+import { Client } from "@/classes/client";
 import { GatewayEvents } from "@/utils/constants";
-import { Message } from "@/classes/Message";
+import { Message } from "@/classes/message";
 
 /**
  * Handles incoming gateway payloads and events

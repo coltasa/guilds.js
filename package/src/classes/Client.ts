@@ -1,18 +1,18 @@
-import { CacheManager } from "@/classes/CacheManager";
-import { Channel } from "@/classes/Channel";
-import { ClientUser } from "@/classes/ClientUser";
+import { CacheManager } from "@/classes/cache-manager";
+import { Channel } from "@/classes/channel";
+import { ClientUser } from "@/classes/client-user";
 import { Endpoints } from "@/utils/endpoints";
-import { EventHandler } from "@/classes/EventHandler";
-import { Guild } from "@/classes/Guild";
-import { GuildsError } from "@/classes/GuildsError";
+import { EventHandler } from "@/classes/event-handler";
+import { Guild } from "@/classes/guild";
+import { GuildsError } from "@/classes/guilds-error";
 import { handleGatewayEvents } from "@/functions/gateway-events";
-import { Message } from "@/classes/Message";
+import { Message } from "@/classes/message";
 import { parseIntents } from "@/functions/parse-intents";
-import { RESTManager } from "@/classes/RESTManager";
-import { Role } from "@/classes/Role";
-import { TextChannel } from "@/classes/TextChannel";
-import { User } from "@/classes/User";
-import { VoiceChannel } from "@/classes/VoiceChannel";
+import { RESTManager } from "@/classes/rest-manager";
+import { Role } from "@/classes/role";
+import { TextChannel } from "@/classes/text-channel";
+import { User } from "@/classes/user";
+import { VoiceChannel } from "@/classes/voice-channel";
 import {
     ActivityTypes,
     ChannelTypes,

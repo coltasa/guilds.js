@@ -1,8 +1,8 @@
-import type { Channel } from "@/classes/Channel";
-import type { Client } from "@/classes/Client";
-import type { Message } from "@/classes/Message";
-import type { TextChannel } from "@/classes/TextChannel";
-import type { VoiceChannel } from "@/classes/VoiceChannel";
+import type { Channel } from "@/classes/channel";
+import type { Client } from "@/classes/client";
+import type { Message } from "@/classes/message";
+import type { TextChannel } from "@/classes/text-channel";
+import type { VoiceChannel } from "@/classes/voice-channel";
 import type {
     ChannelTypes,
     ActivityTypes,

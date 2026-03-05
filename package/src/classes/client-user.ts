@@ -1,6 +1,6 @@
 import type { APIUser } from "discord-api-types/v10";
-import { Client } from "@/classes/Client";
-import { User } from "@/classes/User";
+import { Client } from "@/classes/client";
+import { User } from "@/classes/user";
 
 /**
  * Class representing the user of the client only

@@ -1,13 +1,4 @@
 {
     "prettier.configPath": "package.json",
-    "prettier.arrowParens": "always",
-    "prettier.jsxSingleQuote": false,
-    "prettier.printWidth": 90,
-    "prettier.quoteProps": "as-needed",
-    "prettier.semi": true,
-    "prettier.singleQuote": false,
-    "prettier.tabWidth": 4,
-    "prettier.trailingComma": "es5",
-    "prettier.useTabs": false,
-    "prettier.prettierPath": "./node_modules/prettier"
+    "prettier.prettierPath": "node_modules/prettier"
 }

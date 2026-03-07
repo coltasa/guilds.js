@@ -1,3 +1,5 @@
+> ⚠️ Warning: guilds.js v0 is deprecated and no longer supported. Please upgrade.
+
 <div align="center">
   <img
     alt="guilds.js Logo"

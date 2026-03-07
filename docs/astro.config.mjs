@@ -1,8 +1,9 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc";
-import starlight from "@astrojs/starlight";
-import rapideTheme from "starlight-theme-rapide";
+
+import { defineConfig } from "astro/config"
+import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc"
+import starlight from "@astrojs/starlight"
+import rapideTheme from "starlight-theme-rapide"
 
 export default defineConfig({
     site: "https://guilds.js.org",
@@ -32,4 +33,4 @@ export default defineConfig({
             ],
         }),
     ],
-});
+})

@@ -1,11 +1,11 @@
-import { defineConfig } from "tsdown";
+import { defineConfig } from "tsdown"
 
 export default defineConfig({
     cjsDefault: true,
     clean: true,
     dts: true,
     entry: ["src/index.ts"],
-    format: ["esm", "cjs"],
+    format: "cjs",
     minify: false,
     name: "guilds.js",
     platform: "node",
@@ -13,4 +13,4 @@ export default defineConfig({
     shims: true,
     skipNodeModulesBundle: true,
     target: "node20",
-});
+})

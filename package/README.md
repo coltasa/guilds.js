@@ -13,9 +13,11 @@
 </div>
 <h1 align="center">guilds.js</h1>
 
-guilds.js is a Node.js library for using the [Discord API](https://discord.com/developers/docs/intro).
+guilds.js is a Node.js library for using Discord's API and gateway.
 
 ## Installation
+
+Install `guilds.js@dev` instead if you wish to use the development build created every 24 hours. This build is unstable and should only be used for testing.
 
 ```bash
 npm install guilds.js
@@ -27,46 +29,14 @@ pnpm add guilds.js
 bun add guilds.js
 ```
 
-### Development build
-
-This build is created every 24 hours based on the `main` branch. If you're planning to use the development build, please note that things aren't final and can change at any moment.
-
-```bash
-npm install guilds.js@dev
-# or
-yarn add guilds.js@dev
-# or
-pnpm add guilds.js@dev
-# or
-bun add guilds.js@dev
-```
-
 ## Example
 
 You can find more examples and guides [here](https://guilds.js.org/guide/getting-started/).
 
 ```js
-import { Client, GatewayIntents } from "guilds.js";
-
-// Configure your bot here:
-// https://discord.com/developers/applications
-
-const client = new Client({
-    token: process.env.DISCORD_TOKEN,
-    intents: [
-        GatewayIntents.Guilds,
-        GatewayIntents.GuildMembers,
-        GatewayIntents.GuildMessages,
-    ],
-});
-
-client.once("ready", (c) => {
-    console.log(`Logged in as ${c.user.tag}!`);
-});
-
-client.connect();
+// ...
 ```
 
 ## License
 
-Licensed under the [Apache License 2.0](LICENSE).
+Licensed under the [MIT License](LICENSE).

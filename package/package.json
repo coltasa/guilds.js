@@ -1,24 +1,19 @@
 {
     "name": "guilds.js",
-    "description": "Node.js library for using the Discord API",
+    "description": "Node.js library for using Discord's API and gateway",
     "homepage": "https://guilds.js.org",
-    "version": "0.2.1",
+    "version": "1.0.0",
     "license": "MIT",
     "scripts": {
         "build": "tsdown",
         "format": "prettier --write . --config ../package.json --ignore-path ../.prettierignore",
         "lint": "tsc --noEmit; prettier --check . --config ../package.json --ignore-path ../.prettierignore",
-        "prepublish": "tsdown"
-    },
-    "exports": {
-        "default": "./dist/index.cjs",
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.cjs",
-        "types": "./dist/index.d.cts"
+        "prepublish": "tsdown",
+        "postbuild": "node -e \"const fs=require('fs');const v=require('./package.json').version;fs.appendFileSync('dist/index.cjs','\\nexports.version = \\\"'+v+'\\\";\\n');fs.appendFileSync('dist/index.d.cts','\\nexport declare const version = \\\"'+v+'\\\";\\n');\""
     },
     "main": "./dist/index.cjs",
-    "module": "./dist/index.mjs",
     "types": "./dist/index.d.cts",
+    "exports": "./dist/index.cjs",
     "repository": {
         "type": "git",
         "url": "https://github.com/andrewdku/guilds.js"
@@ -26,9 +21,6 @@
     "private": false,
     "publishConfig": {
         "access": "public"
-    },
-    "dependencies": {
-        "discord-api-types": "^0.38.40"
     },
     "devDependencies": {
         "@types/node": "^25.3.3",

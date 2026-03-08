@@ -1,5 +1,4 @@
 import type { RESTManager } from "@/classes/rest-manager"
-import type * as DiscordAPI from "@/types/api-types"
 
 /** Shorthand type for `(typeof T)[keyof typeof T]` */
 export type ConstValues<T> = T[keyof T]
@@ -19,5 +18,3 @@ export type HTTPMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT"
 export interface RESTManagerProps {
     token: string
 }
-
-export type { DiscordAPI }

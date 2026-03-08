@@ -1,52 +1,52 @@
 import type { ConstValues } from "@/types"
 import type {
-    ApplicationEventWebhookStatuses,
-    ApplicationInstallParamScopes,
-    ApplicationIntegrationTypes,
-    ChannelDefaultForumLayouts,
-    ChannelDefaultSortOrders,
-    ChannelOverwriteTypes,
-    ChannelTypes,
-    ChannelVideoQualityModes,
-    EmbedTypes,
-    GuildAgeRestrictionLevels,
-    GuildDefaultMessageNotificationLevels,
-    GuildExplicitContentFilterLevels,
-    GuildFeatures,
-    GuildMFALevels,
-    GuildPremiumTiers,
-    GuildSystemChannelFlags,
-    GuildVerificationLevels,
-    InteractionTypes,
-    MessageActivityTypes,
-    MessageComponentTypes,
-    MessageReferenceTypes,
-    MessageTypes,
-    PollLayoutTypes,
-    StickerFormatTypes,
-    StickerTypes,
-    TeamMemberMembershipStates,
-    TeamMemberRoleTypes,
-} from "@/types/api-types/constants"
+    APIApplicationEventWebhookStatuses,
+    APIApplicationInstallParamScopes,
+    APIApplicationIntegrationTypes,
+    APIChannelDefaultForumLayouts,
+    APIChannelDefaultSortOrders,
+    APIChannelOverwriteTypes,
+    APIChannelTypes,
+    APIChannelVideoQualityModes,
+    APIEmbedTypes,
+    APIGuildAgeRestrictionLevels,
+    APIGuildDefaultMessageNotificationLevels,
+    APIGuildExplicitContentFilterLevels,
+    APIGuildFeatures,
+    APIGuildMFALevels,
+    APIGuildPremiumTiers,
+    APIGuildSystemChannelFlags,
+    APIGuildVerificationLevels,
+    APIInteractionTypes,
+    APIMessageActivityTypes,
+    APIMessageComponentTypes,
+    APIMessageReferenceTypes,
+    APIMessageTypes,
+    APIPollLayoutTypes,
+    APIStickerFormatTypes,
+    APIStickerTypes,
+    APITeamMemberMembershipStates,
+    APITeamMemberRoleTypes,
+} from "@/discord-api/constants"
 
 /** @see https://docs.discord.com/developers/resources/application#application-object */
-export interface Application {
-    id: Snowflake
+export interface APIApplication {
+    id: APISnowflake
     name: string
     icon: string | null
     description: string
     rpc_origins?: string[]
     bot_public: boolean
     bot_require_code_grant: boolean
-    bot?: Partial<User>
+    bot?: Partial<APIUser>
     terms_of_service_url?: string
     privacy_policy_url?: string
-    owner?: Partial<User>
+    owner?: Partial<APIUser>
     verify_key: string
-    team: Team | null
-    guild_id?: Snowflake
-    guild: Partial<Guild>
-    primary_sku_id?: Snowflake
+    team: APITeam | null
+    guild_id?: APISnowflake
+    guild: Partial<APIGuild>
+    primary_sku_id?: APISnowflake
     slug?: string
     cover_image?: string
     flags?: number
@@ -57,35 +57,35 @@ export interface Application {
     interactions_endpoint_url?: string
     role_connections_verification_url?: string | null
     event_webhooks_url?: string | null
-    event_webhooks_status: ApplicationEventWebhookStatus
-    event_webhooks_types?: WebhookEventType[]
+    event_webhooks_status: APIApplicationEventWebhookStatus
+    event_webhooks_types?: APIWebhookEventType[]
     tags?: string[]
-    install_params?: ApplicationInstallParams
+    install_params?: APIApplicationInstallParams
     custom_install_url?: string
 }
 
 /** @see https://docs.discord.com/developers/resources/application#application-object-application-event-webhook-status */
-export type ApplicationEventWebhookStatus = ConstValues<
-    typeof ApplicationEventWebhookStatuses
+export type APIApplicationEventWebhookStatus = ConstValues<
+    typeof APIApplicationEventWebhookStatuses
 >
 
 /** @see https://docs.discord.com/developers/resources/application#install-params-object */
-export interface ApplicationInstallParams {
+export interface APIApplicationInstallParams {
     scopes: string[]
     permissions: string
 }
 
 /** @see https://docs.discord.com/developers/topics/oauth2#shared-resources-oauth2-scopes */
-export type ApplicationInstallParamsScope =
-    (typeof ApplicationInstallParamScopes)[number]
+export type APIApplicationInstallParamsScope =
+    (typeof APIApplicationInstallParamScopes)[number]
 
 /** @see https://docs.discord.com/developers/resources/application#application-object-application-integration-types */
-export type ApplicationIntegrationType = ConstValues<
-    typeof ApplicationIntegrationTypes
+export type APIApplicationIntegrationType = ConstValues<
+    typeof APIApplicationIntegrationTypes
 >
 
 /** @see https://docs.discord.com/developers/resources/message#attachment-object */
-export interface Attachment {
+export interface APIAttachment {
     content_type?: string
     description?: string
     duration_secs?: number
@@ -93,7 +93,7 @@ export interface Attachment {
     filename: string
     flags?: number
     height?: number | null
-    id: Snowflake
+    id: APISnowflake
     proxy_url: string
     size: number
     title?: string
@@ -103,103 +103,107 @@ export interface Attachment {
 }
 
 /** @see https://docs.discord.com/developers/resources/user#avatar-decoration-data-object */
-export interface AvatarDecorationData {
+export interface APIAvatarDecorationData {
     asset: string
-    sku_id: Snowflake
+    sku_id: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#channel-object */
-export interface Channel {
-    application_id?: Snowflake
-    applied_tags?: Snowflake[]
+export interface APIChannel {
+    application_id?: APISnowflake
+    applied_tags?: APISnowflake[]
     available_tags?: ForumTag[]
     bitrate?: number
-    default_auto_archive_duration?: ChannelAutoArchiveDuration
-    default_forum_layout?: ChannelDefaultForumLayout
-    default_reaction_emoji?: ForumDefaultReaction
-    default_sort_order?: ChannelDefaultSortOrder
+    default_auto_archive_duration?: APIChannelAutoArchiveDuration
+    default_forum_layout?: APIChannelDefaultForumLayout
+    default_reaction_emoji?: APIForumDefaultReaction
+    default_sort_order?: APIChannelDefaultSortOrder
     default_thread_rate_limit_per_user?: number
     flags?: number
-    guild_id?: Snowflake
+    guild_id?: APISnowflake
     icon?: string | null
-    id: Snowflake
-    last_message_id?: Snowflake | null
-    last_pin_timestamp?: ISO8601Timestamp | null
+    id: APISnowflake
+    last_message_id?: APISnowflake | null
+    last_pin_timestamp?: APIISO8601Timestamp | null
     managed?: boolean
-    member?: ThreadMember
+    member?: APIThreadMember
     member_count?: number
     message_count?: number
     name?: string | null
     nsfw?: boolean
-    owner_id?: Snowflake
-    parent_id?: Snowflake | null
-    permission_overwrites?: ChannelOverwrite[]
+    owner_id?: APISnowflake
+    parent_id?: APISnowflake | null
+    permission_overwrites?: APIChannelOverwrite[]
     permissions?: string
     position?: number
     rate_limit_per_user?: number
-    recipients?: User[]
+    recipients?: APIUser[]
     rtc_region?: string | null
-    thread_metadata?: ThreadMetadata
+    thread_metadata?: APIThreadMetadata
     topic?: string | null
     total_message_sent?: number
-    type: ChannelType
+    type: APIChannelType
     user_limit?: number
-    video_quality_mode?: ChannelVideoQualityMode
+    video_quality_mode?: APIChannelVideoQualityMode
 }
 
-export type ChannelAutoArchiveDuration = 60 | 1440 | 4320 | 10080 | (number & {})
+export type APIChannelAutoArchiveDuration = 60 | 1440 | 4320 | 10080 | (number & {})
 
-export type ChannelDefaultForumLayout = ConstValues<
-    typeof ChannelDefaultForumLayouts
+export type APIChannelDefaultForumLayout = ConstValues<
+    typeof APIChannelDefaultForumLayouts
 >
 
 /** @see https://docs.discord.com/developers/resources/channel#channel-object-sort-order-types */
-export type ChannelDefaultSortOrder = ConstValues<typeof ChannelDefaultSortOrders>
+export type APIChannelDefaultSortOrder = ConstValues<
+    typeof APIChannelDefaultSortOrders
+>
 
 /** @see https://docs.discord.com/developers/resources/message#channel-mention-object */
-export interface ChannelMention {
-    guild_id: Snowflake
-    id: Snowflake
+export interface APIChannelMention {
+    guild_id: APISnowflake
+    id: APISnowflake
     name: string
-    type: ChannelType
+    type: APIChannelType
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#overwrite-object */
-export interface ChannelOverwrite {
-    id: Snowflake
+export interface APIChannelOverwrite {
+    id: APISnowflake
     type: number
     allow: string
     deny: string
 }
 
-export type ChannelOverwriteType = ConstValues<typeof ChannelOverwriteTypes>
-export type ChannelType = ConstValues<typeof ChannelTypes>
-export type ChannelVideoQualityMode = ConstValues<typeof ChannelVideoQualityModes>
+export type APIChannelOverwriteType = ConstValues<typeof APIChannelOverwriteTypes>
+export type APIChannelType = ConstValues<typeof APIChannelTypes>
+export type APIChannelVideoQualityMode = ConstValues<
+    typeof APIChannelVideoQualityModes
+>
 
 /** @see https://docs.discord.com/developers/resources/user#collectibles */
-export interface Collectibles {
-    nameplate?: Nameplate
+export interface APICollectibles {
+    nameplate?: APINameplate
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object */
-export interface Embed {
-    author?: EmbedAuthor
+export interface APIEmbed {
+    author?: APIEmbedAuthor
     color?: number
     description?: string
-    fields?: EmbedField[]
-    footer?: EmbedFooter
-    image?: EmbedImage
-    provider?: EmbedProvider
-    thumbnail?: EmbedThumbnail
-    timestamp?: ISO8601Timestamp
+    fields?: APIEmbedField[]
+    footer?: APIEmbedFooter
+    image?: APIEmbedImage
+    provider?: APIEmbedProvider
+    thumbnail?: APIEmbedThumbnail
+    timestamp?: APIISO8601Timestamp
     title?: string
-    type?: EmbedType
+    type?: APIEmbedType
     url?: string
-    video?: EmbedVideo
+    video?: APIEmbedVideo
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-author-structure */
-export interface EmbedAuthor {
+export interface APIEmbedAuthor {
     icon_url?: string
     name: string
     proxy_icon_url?: string
@@ -207,21 +211,21 @@ export interface EmbedAuthor {
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-field-structure */
-export interface EmbedField {
+export interface APIEmbedField {
     inline?: boolean
     name: string
     value: string
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-footer-structure */
-export interface EmbedFooter {
+export interface APIEmbedFooter {
     icon_url?: string
     proxy_icon_url?: string
     text: string
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-image-structure */
-export interface EmbedImage {
+export interface APIEmbedImage {
     height?: number
     proxy_url?: string
     url: string
@@ -229,13 +233,13 @@ export interface EmbedImage {
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-provider-structure */
-export interface EmbedProvider {
+export interface APIEmbedProvider {
     name?: string
     url?: string
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-thumbnail-structure */
-export interface EmbedThumbnail {
+export interface APIEmbedThumbnail {
     height?: number
     proxy_url?: string
     url: string
@@ -243,10 +247,10 @@ export interface EmbedThumbnail {
 }
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-types */
-export type EmbedType = (typeof EmbedTypes)[number]
+export type APIEmbedType = (typeof APIEmbedTypes)[number]
 
 /** @see https://docs.discord.com/developers/resources/message#embed-object-embed-video-structure */
-export interface EmbedVideo {
+export interface APIEmbedVideo {
     height?: number
     proxy_url?: string
     url?: string
@@ -254,136 +258,142 @@ export interface EmbedVideo {
 }
 
 /** @see https://docs.discord.com/developers/resources/emoji#emoji-object */
-export interface Emoji {
+export interface APIEmoji {
     animated?: boolean
     available?: boolean
-    id: Snowflake | null
+    id: APISnowflake | null
     managed?: boolean
     name: string | null
     require_colons?: boolean
-    roles?: Role[]
-    user?: User
+    roles?: APIRole[]
+    user?: APIUser
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#default-reaction-object */
-export interface ForumDefaultReaction {
-    emoji_id: Snowflake | null
+export interface APIForumDefaultReaction {
+    emoji_id: APISnowflake | null
     emoji_name: string | null
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#forum-tag-object */
 export interface ForumTag {
-    emoji_id: Snowflake | null
+    emoji_id: APISnowflake | null
     emoji_name: string | null
-    id: Snowflake
+    id: APISnowflake
     moderated: boolean
     name: string
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object */
-export interface Guild {
-    afk_channel_id: Snowflake | null
+export interface APIGuild {
+    afk_channel_id: APISnowflake | null
     afk_timeout: number
-    application_id: Snowflake | null
+    application_id: APISnowflake | null
     approximate_member_count?: number
     approximate_presence_count?: number
     banner: string | null
-    default_message_notifications: GuildDefaultMessageNotificationLevel
+    default_message_notifications: APIGuildDefaultMessageNotificationLevel
     description: string | null
     discovery_splash: string | null
-    emojis: Emoji[]
-    explicit_content_filter: GuildExplicitContentFilterLevel
-    features: GuildFeature[]
+    emojis: APIEmoji[]
+    explicit_content_filter: APIGuildExplicitContentFilterLevel
+    features: APIGuildFeature[]
     icon: string | null
     icon_hash?: string | null
-    id: Snowflake
-    incidents_data: GuildIncidentsData | null
+    id: APISnowflake
+    incidents_data: APIGuildIncidentsData | null
     max_members?: number
     max_presences?: number | null
     max_stage_video_channel_users?: number
     max_video_channel_users?: number
-    mfa_level: GuildMFALevel
+    mfa_level: APIGuildMFALevel
     name: string
     nsfw_level: number
     owner?: boolean
-    owner_id: Snowflake
+    owner_id: APISnowflake
     permissions?: string
     preferred_locale: string
     premium_progress_bar_enabled: boolean
     premium_subscription_count?: number
-    premium_tier: GuildPremiumTier
-    public_updates_channel_id: Snowflake | null
+    premium_tier: APIGuildPremiumTier
+    public_updates_channel_id: APISnowflake | null
     region?: string | null
-    roles: Role[]
-    rules_channel_id: Snowflake | null
-    safety_alerts_channel_id: Snowflake | null
+    roles: APIRole[]
+    rules_channel_id: APISnowflake | null
+    safety_alerts_channel_id: APISnowflake | null
     splash: string | null
-    stickers?: Sticker[]
+    stickers?: APISticker[]
     system_channel_flags: number
-    system_channel_id: Snowflake | null
+    system_channel_id: APISnowflake | null
     vanity_url_code: string | null
-    verification_level: GuildVerificationLevel
-    welcome_screen?: GuildWelcomeScreen
-    widget_channel_id?: Snowflake | null
+    verification_level: APIGuildVerificationLevel
+    welcome_screen?: APIGuildWelcomeScreen
+    widget_channel_id?: APISnowflake | null
     widget_enabled?: boolean
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-guild-nsfw-level */
-export type GuildAgeRestrictionLevel = ConstValues<typeof GuildAgeRestrictionLevels>
+export type APIGuildAgeRestrictionLevel = ConstValues<
+    typeof APIGuildAgeRestrictionLevels
+>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-default-message-notification-level */
-export type GuildDefaultMessageNotificationLevel = ConstValues<
-    typeof GuildDefaultMessageNotificationLevels
+export type APIGuildDefaultMessageNotificationLevel = ConstValues<
+    typeof APIGuildDefaultMessageNotificationLevels
 >
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-explicit-content-filter-level */
-export type GuildExplicitContentFilterLevel = ConstValues<
-    typeof GuildExplicitContentFilterLevels
+export type APIGuildExplicitContentFilterLevel = ConstValues<
+    typeof APIGuildExplicitContentFilterLevels
 >
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-guild-features */
-export type GuildFeature = (typeof GuildFeatures)[number]
+export type APIGuildFeature = (typeof APIGuildFeatures)[number]
 
 /** @see https://docs.discord.com/developers/resources/guild#incidents-data-object */
-export interface GuildIncidentsData {
-    dm_spam_detected_at?: ISO8601Timestamp | null
-    dms_disabled_until: ISO8601Timestamp | null
-    invites_disabled_until: ISO8601Timestamp | null
-    raid_detected_at?: ISO8601Timestamp | null
+export interface APIGuildIncidentsData {
+    dm_spam_detected_at?: APIISO8601Timestamp | null
+    dms_disabled_until: APIISO8601Timestamp | null
+    invites_disabled_until: APIISO8601Timestamp | null
+    raid_detected_at?: APIISO8601Timestamp | null
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-member-object */
-export interface GuildMember {
+export interface APIGuildMember {
     avatar?: string | null
-    avatar_decoration_data?: AvatarDecorationData | null
+    avatar_decoration_data?: APIAvatarDecorationData | null
     banner?: string | null
-    communication_disabled_until?: ISO8601Timestamp | null
+    communication_disabled_until?: APIISO8601Timestamp | null
     deaf: boolean
     flags: number
-    joined_at: ISO8601Timestamp | null
+    joined_at: APIISO8601Timestamp | null
     mute: boolean
     nick?: string | null
     pending?: boolean
     permissions?: string
-    premium_since?: ISO8601Timestamp | null
-    roles: Snowflake[]
-    user?: User
+    premium_since?: APIISO8601Timestamp | null
+    roles: APISnowflake[]
+    user?: APIUser
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-mfa-level */
-export type GuildMFALevel = ConstValues<typeof GuildMFALevels>
+export type APIGuildMFALevel = ConstValues<typeof APIGuildMFALevels>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-premium-tier */
-export type GuildPremiumTier = ConstValues<typeof GuildPremiumTiers>
+export type APIGuildPremiumTier = ConstValues<typeof APIGuildPremiumTiers>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-system-channel-flags */
-export type GuildSystemChannelFlag = ConstValues<typeof GuildSystemChannelFlags>
+export type APIGuildSystemChannelFlag = ConstValues<
+    typeof APIGuildSystemChannelFlags
+>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-verification-level */
-export type GuildVerificationLevel = ConstValues<typeof GuildVerificationLevels>
+export type APIGuildVerificationLevel = ConstValues<
+    typeof APIGuildVerificationLevels
+>
 
 /** @see https://docs.discord.com/developers/resources/voice#voice-region-object */
-export interface GuildVoiceRegion {
+export interface APIGuildVoiceRegion {
     custom: boolean
     deprecated: boolean
     id: string
@@ -392,142 +402,142 @@ export interface GuildVoiceRegion {
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#welcome-screen-object */
-export interface GuildWelcomeScreen {
+export interface APIGuildWelcomeScreen {
     description: string | null
-    welcome_channels: GuildWelcomeScreenChannel[]
+    welcome_channels: APIGuildWelcomeScreenChannel[]
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#welcome-screen-object-welcome-screen-channel-structure */
-export interface GuildWelcomeScreenChannel {
-    channel_id: Snowflake
+export interface APIGuildWelcomeScreenChannel {
+    channel_id: APISnowflake
     description: string
-    emoji_id: Snowflake
+    emoji_id: APISnowflake
     emoji_name: string
 }
 
 /** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-type */
-export type InteractionType = ConstValues<typeof InteractionTypes>
+export type APIInteractionType = ConstValues<typeof APIInteractionTypes>
 
 /** @see https://docs.discord.com/developers/reference#iso8601-date%2Ftime */
-export type ISO8601Timestamp = string
+export type APIISO8601Timestamp = string
 
 /** @see https://docs.discord.com/developers/resources/message#message-object */
-export interface Message {
-    activity?: MessageActivityType
-    application?: Partial<Application>
-    attachments: Attachment[]
-    author: User
-    call?: MessageCall
-    channel_id: Snowflake
-    components?: MessageComponent[]
+export interface APIMessage {
+    activity?: APIMessageActivityType
+    application?: Partial<APIApplication>
+    attachments: APIAttachment[]
+    author: APIUser
+    call?: APIMessageCall
+    channel_id: APISnowflake
+    components?: APIMessageComponent[]
     content: string
-    edited_timestamp: ISO8601Timestamp | null
-    embeds: Embed[]
+    edited_timestamp: APIISO8601Timestamp | null
+    embeds: APIEmbed[]
     flags?: number
-    id: Snowflake
-    interaction?: MessageInteraction
-    interaction_metadata?: MessageInteractionMetadata
-    mention_channels: ChannelMention[]
+    id: APISnowflake
+    interaction?: APIMessageInteraction
+    interaction_metadata?: APIMessageInteractionMetadata
+    mention_channels: APIChannelMention[]
     mention_everyone: boolean
-    mention_roles: Role[]
-    mentions: User[]
-    message_reference?: MessageReference
-    message_snapshots?: MessageSnapshot[]
+    mention_roles: APIRole[]
+    mentions: APIUser[]
+    message_reference?: APIMessageReference
+    message_snapshots?: APIMessageSnapshot[]
     nonce?: string | number
     pinned: boolean
-    poll?: Poll
+    poll?: APIPoll
     position?: number
-    reactions?: Reaction[]
-    referenced_message?: Message | null
-    resolved?: Resolved
-    role_subscription_data?: RoleSubscriptionData
-    sticker_items?: MessageStickerItem[]
-    stickers?: Sticker[]
-    thread?: Channel
-    timestamp: ISO8601Timestamp
+    reactions?: APIReaction[]
+    referenced_message?: APIMessage | null
+    resolved?: APIResolved
+    role_subscription_data?: APIRoleSubscriptionData
+    sticker_items?: APIMessageStickerItem[]
+    stickers?: APISticker[]
+    thread?: APIChannel
+    timestamp: APIISO8601Timestamp
     tts: boolean
-    type: MessageType
-    webhook_id?: Snowflake
+    type: APIMessageType
+    webhook_id?: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/resources/message#message-object-message-activity-structure */
-export type MessageActivityType = ConstValues<typeof MessageActivityTypes>
+export type APIMessageActivityType = ConstValues<typeof APIMessageActivityTypes>
 
 /** @see https://docs.discord.com/developers/resources/message#message-call-object */
-export interface MessageCall {
-    participants: Snowflake[]
-    ended_timestamp?: ISO8601Timestamp | null
+export interface APIMessageCall {
+    participants: APISnowflake[]
+    ended_timestamp?: APIISO8601Timestamp | null
 }
 
 /** @see https://docs.discord.com/developers/components/reference#anatomy-of-a-component */
-export interface MessageComponent {
+export interface APIMessageComponent {
     id?: number
-    type: MessageComponentType
+    type: APIMessageComponentType
 }
 
 /** @see https://docs.discord.com/developers/components/reference#component-object-component-types */
-export type MessageComponentType = ConstValues<typeof MessageComponentTypes>
+export type APIMessageComponentType = ConstValues<typeof APIMessageComponentTypes>
 
 /** @see https://docs.discord.com/developers/interactions/receiving-and-responding#message-interaction-object-message-interaction-structure */
-export interface MessageInteraction {
-    id: Snowflake
-    member?: Partial<GuildMember>
+export interface APIMessageInteraction {
+    id: APISnowflake
+    member?: Partial<APIGuildMember>
     name: string
-    type: InteractionType
-    user: User
+    type: APIInteractionType
+    user: APIUser
 }
 
 /** @see https://docs.discord.com/developers/resources/message#message-interaction-metadata-object */
-export interface MessageInteractionMetadata {
-    authorizing_integration_owners: MessageInteractionMetadataAuthorizingIntegrationOwners
-    id: Snowflake
-    original_response_message_id?: Snowflake
-    target_message_id?: Snowflake
-    target_user?: User
-    type: InteractionType
-    user: User
+export interface APIMessageInteractionMetadata {
+    authorizing_integration_owners: APIMessageInteractionMetadataAuthorizingIntegrationOwners
+    id: APISnowflake
+    original_response_message_id?: APISnowflake
+    target_message_id?: APISnowflake
+    target_user?: APIUser
+    type: APIInteractionType
+    user: APIUser
 }
 
-export type MessageInteractionMetadataAuthorizingIntegrationOwners = Partial<
-    Record<ApplicationIntegrationType, Snowflake>
+export type APIMessageInteractionMetadataAuthorizingIntegrationOwners = Partial<
+    Record<APIApplicationIntegrationType, APISnowflake>
 >
 
 /** @see https://docs.discord.com/developers/resources/message#message-reference-structure */
-export interface MessageReference {
-    channel_id?: Snowflake
+export interface APIMessageReference {
+    channel_id?: APISnowflake
     fail_if_not_exists?: boolean
-    guild_id?: Snowflake
-    message_id?: Snowflake
-    type?: MessageReferenceType
+    guild_id?: APISnowflake
+    message_id?: APISnowflake
+    type?: APIMessageReferenceType
 }
 
 /** @see https://docs.discord.com/developers/resources/message#message-reference-types */
-export type MessageReferenceType = ConstValues<typeof MessageReferenceTypes>
+export type APIMessageReferenceType = ConstValues<typeof APIMessageReferenceTypes>
 
 /** @see https://docs.discord.com/developers/resources/message#message-snapshot-object */
-export interface MessageSnapshot {
-    message: Partial<Message>
+export interface APIMessageSnapshot {
+    message: Partial<APIMessage>
 }
 
 /** @see https://docs.discord.com/developers/resources/sticker#sticker-item-object */
-export interface MessageStickerItem {
-    format_type: StickerFormatType
-    id: Snowflake
+export interface APIMessageStickerItem {
+    format_type: APIStickerFormatType
+    id: APISnowflake
     name: string
 }
 
 /** @see https://docs.discord.com/developers/resources/message#message-object-message-types */
-export type MessageType = ConstValues<typeof MessageTypes>
+export type APIMessageType = ConstValues<typeof APIMessageTypes>
 
 /** @see https://docs.discord.com/developers/resources/user#nameplate-nameplate-structure */
-export interface Nameplate {
+export interface APINameplate {
     asset: string
     label: string
-    palette: NameplatePalette
-    sku_id: Snowflake
+    palette: APINameplatePalette
+    sku_id: APISnowflake
 }
 
-export type NameplatePalette =
+export type APINameplatePalette =
     | "berry"
     | "bubble_gum"
     | "clover"
@@ -542,195 +552,195 @@ export type NameplatePalette =
     | (string & {})
 
 /** @see https://docs.discord.com/developers/resources/poll#poll-object */
-export interface Poll {
+export interface APIPoll {
     allow_multiselect: boolean
-    answers: PollAnswer[]
-    expiry: ISO8601Timestamp | null
-    layout_type: PollLayoutType
-    question: PollMedia
-    results?: PollResults
+    answers: APIPollAnswer[]
+    expiry: APIISO8601Timestamp | null
+    layout_type: APIPollLayoutType
+    question: APIPollMedia
+    results?: APIPollResults
 }
 
 /** @see https://docs.discord.com/developers/resources/poll#poll-answer-object-poll-answer-object-structure */
-export interface PollAnswer {
+export interface APIPollAnswer {
     answer_id: number
-    poll_media: PollMedia
+    poll_media: APIPollMedia
 }
 
 /** @see https://docs.discord.com/developers/resources/poll#poll-answer-object-poll-answer-object-structure */
-export interface PollAnswerCount {
+export interface APIPollAnswerCount {
     count: boolean
     id: number
     me_voted: boolean
 }
 
 /** @see https://docs.discord.com/developers/resources/poll#layout-type */
-export type PollLayoutType = ConstValues<typeof PollLayoutTypes>
+export type APIPollLayoutType = ConstValues<typeof APIPollLayoutTypes>
 
 /** @see https://docs.discord.com/developers/resources/poll#poll-media-object-poll-media-object-structure */
-export interface PollMedia {
-    emoji?: Partial<Emoji>
+export interface APIPollMedia {
+    emoji?: Partial<APIEmoji>
 }
 
 /** @see https://docs.discord.com/developers/resources/poll#poll-answer-object-poll-answer-object-structure */
-export interface PollResults {
-    answer_counts: PollAnswerCount[]
+export interface APIPollResults {
+    answer_counts: APIPollAnswerCount[]
     is_finalized: boolean
 }
 
 /** @see https://docs.discord.com/developers/resources/message#reaction-object */
-export interface Reaction {
+export interface APIReaction {
     burst_colors: string[]
     count: number
-    count_details: ReactionCountDetails
-    emoji: Partial<Emoji>
+    count_details: APIReactionCountDetails
+    emoji: Partial<APIEmoji>
     me: boolean
     me_burst: boolean
 }
 
 /** @see https://docs.discord.com/developers/resources/message#reaction-count-details-object */
-export interface ReactionCountDetails {
+export interface APIReactionCountDetails {
     burst: number
     normal: number
 }
 
 /** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
-export interface Resolved {
-    attachments?: Record<Snowflake, Attachment>
-    channels?: Record<Snowflake, Partial<Channel>>
-    members?: Record<Snowflake, Partial<GuildMember>>
-    messages?: Record<Snowflake, Partial<Message>>
-    roles?: Record<Snowflake, Role>
-    users?: Record<Snowflake, User>
+export interface APIResolved {
+    attachments?: Record<APISnowflake, APIAttachment>
+    channels?: Record<APISnowflake, Partial<APIChannel>>
+    members?: Record<APISnowflake, Partial<APIGuildMember>>
+    messages?: Record<APISnowflake, Partial<APIMessage>>
+    roles?: Record<APISnowflake, APIRole>
+    users?: Record<APISnowflake, APIUser>
 }
 
 /** @see https://docs.discord.com/developers/topics/permissions#role-object */
-export interface Role {
+export interface APIRole {
     /** @deprecated */ color: number
-    colors: RoleColors
+    colors: APIRoleColors
     flags: number
     hoist: boolean
     icon?: string | null
-    id: Snowflake
+    id: APISnowflake
     managed: boolean
     mentionable: boolean
     name: string
     permissions: string
     position: number
-    tags?: RoleTags
+    tags?: APIRoleTags
     unicode_emoji?: string | null
 }
 
 /** @see https://docs.discord.com/developers/topics/permissions#role-object-role-colors-object */
-export interface RoleColors {
+export interface APIRoleColors {
     primary_color: number
     secondary_color: number | null
     tertiary_color: number | null
 }
 
 /** @see https://docs.discord.com/developers/resources/message#role-subscription-data-object */
-export interface RoleSubscriptionData {
+export interface APIRoleSubscriptionData {
     is_renewal: boolean
-    role_subscription_listing_id: Snowflake
+    role_subscription_listing_id: APISnowflake
     tier_name: string
     total_months_subscribed: number
 }
 
 /** @see https://docs.discord.com/developers/topics/permissions#role-object-role-tags-structure */
-export interface RoleTags {
+export interface APIRoleTags {
     available_for_purchase?: null
-    bot_id?: Snowflake
+    bot_id?: APISnowflake
     guild_connections?: null
-    integration_id?: Snowflake
+    integration_id?: APISnowflake
     premium_subscriber?: null
-    subscription_listing_id?: Snowflake
+    subscription_listing_id?: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/reference#snowflakes */
-export type Snowflake = string
+export type APISnowflake = string
 
 /** @see https://docs.discord.com/developers/resources/sticker#sticker-object */
-export interface Sticker {
+export interface APISticker {
     available?: boolean
     description: string | null
-    format_type: StickerFormatType
-    guild_id?: Snowflake
-    id: Snowflake
+    format_type: APIStickerFormatType
+    guild_id?: APISnowflake
+    id: APISnowflake
     name: string
-    pack_id?: Snowflake
+    pack_id?: APISnowflake
     sort_value?: number
     tags: string
-    type: StickerType
-    user?: User
+    type: APIStickerType
+    user?: APIUser
 }
 
 /** @see https://docs.discord.com/developers/resources/sticker#sticker-object-sticker-format-types */
-export type StickerFormatType = ConstValues<typeof StickerFormatTypes>
+export type APIStickerFormatType = ConstValues<typeof APIStickerFormatTypes>
 
 /** @see https://docs.discord.com/developers/resources/sticker#sticker-object-sticker-types */
-export type StickerType = ConstValues<typeof StickerTypes>
+export type APIStickerType = ConstValues<typeof APIStickerTypes>
 
 /** @see https://docs.discord.com/developers/topics/teams#data-models-team-object */
-export interface Team {
+export interface APITeam {
     icon: string | null
-    id: Snowflake
-    members: TeamMember[]
+    id: APISnowflake
+    members: APITeamMember[]
     name: string
-    owner_user_id: Snowflake
+    owner_user_id: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/topics/teams#data-models-team-member-object */
-export interface TeamMember {
-    membership_state: TeamMemberMembershipState
-    team_id: Snowflake
-    user: Partial<User>
+export interface APITeamMember {
+    membership_state: APITeamMemberMembershipState
+    team_id: APISnowflake
+    user: Partial<APIUser>
     role: string
 }
 
 /** @see https://docs.discord.com/developers/topics/teams#data-models-membership-state-enum */
-export type TeamMemberMembershipState = ConstValues<
-    typeof TeamMemberMembershipStates
+export type APITeamMemberMembershipState = ConstValues<
+    typeof APITeamMemberMembershipStates
 >
 
 /** @see https://docs.discord.com/developers/topics/teams#team-member-roles-team-member-role-types */
-export type TeamMemberRoleType = ConstValues<typeof TeamMemberRoleTypes>
+export type APITeamMemberRoleType = ConstValues<typeof APITeamMemberRoleTypes>
 
 /** @see https://docs.discord.com/developers/resources/channel#thread-member-object */
-export interface ThreadMember {
+export interface APIThreadMember {
     flags: number
-    id?: Snowflake
-    join_timestamp: ISO8601Timestamp
-    member?: GuildMember
-    user_id?: Snowflake
+    id?: APISnowflake
+    join_timestamp: APIISO8601Timestamp
+    member?: APIGuildMember
+    user_id?: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#thread-metadata-object */
-export interface ThreadMetadata {
-    archive_timestamp: ISO8601Timestamp
+export interface APIThreadMetadata {
+    archive_timestamp: APIISO8601Timestamp
     archived: boolean
-    auto_archive_duration: ChannelAutoArchiveDuration
-    create_timestamp?: ISO8601Timestamp | null
+    auto_archive_duration: APIChannelAutoArchiveDuration
+    create_timestamp?: APIISO8601Timestamp | null
     invitable?: boolean
     locked: boolean
 }
 
 /** @see https://docs.discord.com/developers/resources/user#user-object */
-export interface User {
+export interface APIUser {
     accent_color?: number
     avatar: string | null
-    avatar_decoration_data?: AvatarDecorationData | null
+    avatar_decoration_data?: APIAvatarDecorationData | null
     banner?: string | null
     bot?: boolean
-    collectibles?: Collectibles | null
+    collectibles?: APICollectibles | null
     discriminator: string
     email?: string | null
     flags?: number
     global_name: string | null
-    id: Snowflake
+    id: APISnowflake
     locale?: string
     mfa_enabled?: boolean
     premium_type?: number
-    primary_guild?: UserPrimaryGuild | null
+    primary_guild?: APIUserPrimaryGuild | null
     public_flags?: number
     system?: boolean
     username: string
@@ -738,15 +748,15 @@ export interface User {
 }
 
 /** @see https://docs.discord.com/developers/resources/user#user-object-user-primary-guild */
-export interface UserPrimaryGuild {
+export interface APIUserPrimaryGuild {
     badge: string | null
     identity_enabled: boolean | null
-    identity_guild_id: Snowflake | null
+    identity_guild_id: APISnowflake | null
     tag: string | null
 }
 
 /** @see https://docs.discord.com/developers/events/webhook-events#event-types */
-export type WebhookEventType =
+export type APIWebhookEventType =
     | "APPLICATION_AUTHORIZED"
     | "APPLICATION_DEAUTHORIZED"
     | "ENTITLEMENT_CREATE"

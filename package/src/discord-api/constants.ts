@@ -1,10 +1,10 @@
-export const ApplicationEventWebhookStatuses = {
+export const APIApplicationEventWebhookStatuses = {
     DISABLED: 1,
     DISABLED_BY_DISCORD: 3,
     ENABLED: 2,
 } as const
 
-export const ApplicationInstallParamScopes = [
+export const APIApplicationInstallParamScopes = [
     "activities.read",
     "activities.write",
     "applications.builds.read",
@@ -35,28 +35,28 @@ export const ApplicationInstallParamScopes = [
     "webhook.incoming",
 ] as const
 
-export const ApplicationIntegrationTypes = {
+export const APIApplicationIntegrationTypes = {
     GUILD_INSTALL: 0,
     USER_INSTALL: 1,
 } as const
 
-export const ChannelDefaultForumLayouts = {
+export const APIChannelDefaultForumLayouts = {
     GALLERY_VIEW: 2,
     LIST_VIEW: 1,
     NOT_SET: 0,
 } as const
 
-export const ChannelDefaultSortOrders = {
+export const APIChannelDefaultSortOrders = {
     CREATION_DATE: 1,
     LATEST_ACTIVITY: 0,
 } as const
 
-export const ChannelOverwriteTypes = {
+export const APIChannelOverwriteTypes = {
     MEMBER: 1,
     ROLE: 0,
 } as const
 
-export const ChannelTypes = {
+export const APIChannelTypes = {
     ANNOUNCEMENT_THREAD: 10,
     DM: 1,
     GROUP_DM: 3,
@@ -72,12 +72,12 @@ export const ChannelTypes = {
     PUBLIC_THREAD: 11,
 } as const
 
-export const ChannelVideoQualityModes = {
+export const APIChannelVideoQualityModes = {
     AUTO: 1,
     FULL: 2,
 } as const
 
-export const EmbedTypes = [
+export const APIEmbedTypes = [
     "article",
     "gifv",
     "image",
@@ -87,25 +87,25 @@ export const EmbedTypes = [
     "video",
 ] as const
 
-export const GuildAgeRestrictionLevels = {
+export const APIGuildAgeRestrictionLevels = {
     AGE_RESTRICTED: 3,
     DEFAULT: 0,
     EXPLICIT: 1,
     SAFE: 2,
 } as const
 
-export const GuildDefaultMessageNotificationLevels = {
+export const APIGuildDefaultMessageNotificationLevels = {
     ALL_MESSAGES: 0,
     ONLY_MENTIONS: 1,
 } as const
 
-export const GuildExplicitContentFilterLevels = {
+export const APIGuildExplicitContentFilterLevels = {
     ALL_MEMBERS: 2,
     DISABLED: 0,
     MEMBERS_WITHOUT_ROLES: 1,
 } as const
 
-export const GuildFeatures = [
+export const APIGuildFeatures = [
     "ANIMATED_BANNER",
     "ANIMATED_ICON",
     "APPLICATION_COMMAND_PERMISSIONS_V2behavior",
@@ -140,19 +140,19 @@ export const GuildFeatures = [
     "WELCOME_SCREEN_ENABLED",
 ] as const
 
-export const GuildMFALevels = {
+export const APIGuildMFALevels = {
     ELEVATED: 1,
     NONE: 0,
 } as const
 
-export const GuildPremiumTiers = {
+export const APIGuildPremiumTiers = {
     NONE: 0,
     TIER_1: 1,
     TIER_2: 2,
     TIER_3: 3,
 } as const
 
-export const GuildSystemChannelFlags = {
+export const APIGuildSystemChannelFlags = {
     SUPPRESS_GUILD_REMINDER_NOTIFICATIONS: 1 << 2,
     SUPPRESS_JOIN_NOTIFICATION_REPLIES: 1 << 3,
     SUPPRESS_JOIN_NOTIFICATIONS: 1 << 0,
@@ -161,7 +161,7 @@ export const GuildSystemChannelFlags = {
     SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS: 1 << 4,
 } as const
 
-export const GuildVerificationLevels = {
+export const APIGuildVerificationLevels = {
     HIGH: 3,
     LOW: 1,
     MEDIUM: 2,
@@ -169,7 +169,7 @@ export const GuildVerificationLevels = {
     VERY_HIGH: 4,
 } as const
 
-export const InteractionTypes = {
+export const APIInteractionTypes = {
     APPLICATION_COMMAND: 2,
     APPLICATION_COMMAND_AUTOCOMPLETE: 4,
     MESSAGE_COMPONENT: 3,
@@ -177,14 +177,14 @@ export const InteractionTypes = {
     PING: 1,
 } as const
 
-export const MessageActivityTypes = {
+export const APIMessageActivityTypes = {
     JOIN: 1,
     JOIN_REQUEST: 5,
     LISTEN: 3,
     SPECTATE: 2,
 } as const
 
-export const MessageComponentTypes = {
+export const APIMessageComponentTypes = {
     ACTION_ROW: 1,
     BUTTON: 2,
     CHANNEL_SELECT: 8,
@@ -207,12 +207,12 @@ export const MessageComponentTypes = {
     USER_SELECT: 5,
 } as const
 
-export const MessageReferenceTypes = {
+export const APIMessageReferenceTypes = {
     DEFAULT: 0,
     FORWARD: 1,
 } as const
 
-export const MessageTypes = {
+export const APIMessageTypes = {
     AUTO_MODERATION_ACTION: 24,
     CALL: 3,
     CHANNEL_FOLLOW_ADD: 12,
@@ -252,28 +252,28 @@ export const MessageTypes = {
     USER_JOIN: 7,
 } as const
 
-export const PollLayoutTypes = {
+export const APIPollLayoutTypes = {
     DEFAULT: 1,
 } as const
 
-export const StickerFormatTypes = {
+export const APIStickerFormatTypes = {
     APNG: 2,
     GIF: 4,
     LOTTIE: 3,
     PNG: 1,
 } as const
 
-export const StickerTypes = {
+export const APIStickerTypes = {
     GUILD: 2,
     STANDARD: 1,
 } as const
 
-export const TeamMemberMembershipStates = {
+export const APITeamMemberMembershipStates = {
     ACCEPTED: 2,
     INVITED: 1,
 } as const
 
-export const TeamMemberRoleTypes = {
+export const APITeamMemberRoleTypes = {
     Admin: "admin",
     Developer: "developer",
     /**

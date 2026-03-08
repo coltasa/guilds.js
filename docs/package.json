@@ -6,7 +6,7 @@
         "astro": "astro",
         "build": "astro build",
         "dev": "astro dev",
-        "format": "prettier --write astro.config.mjs src/content.config.ts src/content/docs/**/*.{md,mdx} --ignore-path ../.prettierignore",
+        "format": "prettier --write astro.config.mjs src/content.config.ts src/content/docs/**/*.md* --ignore-path ../.prettierignore",
         "preview": "astro preview",
         "start": "astro dev"
     },

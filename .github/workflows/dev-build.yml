@@ -8,13 +8,14 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
+
         steps:
             - name: Setup pnpm
               uses: pnpm/action-setup@v4
               with:
                   version: "10"
 
-            - name: Checkout Repository
+            - name: Checkout repository
               uses: actions/checkout@v4
 
             - name: Setup Node.js
@@ -26,79 +27,13 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Deprecate previous dev version
-              run: |
-                  node --input-type=module << 'EOF'
-                  import { readFile } from 'node:fs/promises';
-                  import { execSync } from 'node:child_process';
-
-                  try {
-                    const pkgJson = await readFile('./package/package.json', 'utf8');
-                    const { name: pkgName } = JSON.parse(pkgJson);
-                    // const pkgName = "guilds.js";
-
-                    const stdout = execSync(
-                      `pnpm view ${pkgName} versions --json`,
-                      { encoding: 'utf8' }
-                    );
-
-                    await new Promise(resolve => setTimeout(resolve, 2500));
-                    const versions = JSON.parse(stdout);
-
-                    if (!versions || !stdout.trim()) {
-                      console.log('No versions were found.');
-                      process.exit(0);
-                    }
-
-                    const devVersions = versions
-                      .filter(v => /^0\.0\.0-dev\.\d{12}$/.test(v))
-                      .sort();
-
-                    if (devVersions.length === 0) {
-                      console.log('No development versions to deprecate.');
-                      process.exit(0);
-                    }
-
-                    const currentVersion = process.env.NEW_VERSION;
-                    const latestDevVersion = devVersions[devVersions.length - 1];
-                    const deprecatedVersion =
-                      latestDevVersion === currentVersion
-                        ? devVersions[devVersions.length - 2]
-                        : latestDevVersion;
-
-                    if (!deprecatedVersion) {
-                      console.log('No previous development version to deprecate.');
-                      process.exit(0);
-                    }
-
-                    console.log(`Deprecating ${pkgName}@${deprecatedVersion}...`);
-                    execSync(
-                      `pnpm deprecate "${pkgName}@${deprecatedVersion}" "outdated dev build"`,
-                      {
-                        stdio: 'inherit',
-                        env: {
-                          ...process.env,
-                          NODE_AUTH_TOKEN: process.env.NODE_AUTH_TOKEN,
-                        },
-                      }
-                    );
-
-                  } catch (error) {
-                    console.error(`Error deprecating development version: ${error.message ?? error}`);
-                    process.exit(1);
-                  }
-
-                  EOF
-              env:
-                  NEW_VERSION: ${{ env.DEV_VERSION }}
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
             - name: Generate development version
               id: version
               run: |
                   DEV_VERSION="$(node -e "console.log(require('./package/package.json').version)")-dev.$(date -u +%Y%m%d%H%M)"
                   echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_ENV
                   echo "DEV_VERSION=$DEV_VERSION" >> $GITHUB_OUTPUT
+
                   node -e "
                     const fs = require('node:fs');
                     const pkgPath = './package/package.json';
@@ -106,6 +41,69 @@ jobs:
                     pkg.version = '$DEV_VERSION';
                     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
                   "
+
+            - name: Deprecate previous dev version
+              run: |
+                  node --input-type=module << 'EOF'
+                  import { readFile } from 'node:fs/promises'
+                  import { execSync } from 'node:child_process'
+
+                  try {
+                    const pkgJson = await readFile('./package/package.json', 'utf8')
+                    const { name: pkgName, version: currentVersion } = JSON.parse(pkgJson)
+
+                    const stdout = execSync(
+                      `pnpm view ${pkgName} versions --json`,
+                      { encoding: 'utf8' }
+                    )
+
+                    const versions = JSON.parse(stdout ?? "[]")
+                    const devVersions = versions
+                      .map((v) => {
+                        const match = v.match(/^\d+\.\d+\.\d+-dev\.(\d{12})$/)
+
+                        if (!match) {
+                          return null
+                        }
+
+                        return { version: v, ts: Number(match[1]) }
+                      })
+                      .filter(Boolean)
+                      .sort((a, b) => a.ts - b.ts)
+
+                    if (devVersions.length < 1) {
+                      console.log('No version to deprecate.')
+                      process.exit(0)
+                    }
+
+                    const previous = devVersions.at(-1)?.version
+
+                    if (!previous || previous === currentVersion) {
+                      console.log('No version to deprecate.')
+                      process.exit(0)
+                    }
+
+                    console.log(`Deprecating ${pkgName}@${previous}...`)
+
+                    execSync(
+                      `pnpm deprecate "${pkgName}@${previous}" "outdated dev build"`,
+                      {
+                        stdio: 'inherit',
+                        env: {
+                          ...process.env,
+                          NODE_AUTH_TOKEN: process.env.NODE_AUTH_TOKEN
+                        }
+                      }
+                    )
+
+                  } catch (error) {
+                    console.error(`Deprecation failed: ${error.message ?? error}`)
+                    process.exit(1)
+                  }
+
+                  EOF
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Publish package
               working-directory: package

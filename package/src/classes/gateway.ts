@@ -17,19 +17,19 @@ export class Gateway {
 
     public constructor(props: GatewayProps) {
         if (!props || typeof props !== "object") {
-            throw new TypeError("Expected props to be an object")
+            throw new TypeError("Invalid props provided")
         }
 
         if (!props.intents || typeof props.intents !== "number") {
-            throw new TypeError("Expected intents to be a")
+            throw new TypeError("Invalid intents provided")
         }
 
         if (!props.rest || !(props.rest instanceof RESTManager)) {
-            throw new TypeError("Expected rest to be a RESTManager")
+            throw new TypeError("Invalid rest provided")
         }
 
         if (!props.token || typeof props.token !== "string") {
-            throw new TypeError("Expected token to be a string")
+            throw new TypeError("Invalid token provided")
         }
 
         this.#token = parseToken(props.token)

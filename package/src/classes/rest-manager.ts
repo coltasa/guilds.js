@@ -11,11 +11,11 @@ export class RESTManager {
 
     public constructor(props: RESTManagerProps) {
         if (!props || typeof props !== "object") {
-            throw new TypeError("Expected props to be an object")
+            throw new TypeError("Invalid props provided")
         }
 
         if (!props.token || typeof props.token !== "string") {
-            throw new TypeError("Expected token to be a string")
+            throw new TypeError("Invalid token provided")
         }
 
         this.#token = parseToken(props.token)

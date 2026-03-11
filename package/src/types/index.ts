@@ -1,6 +1,6 @@
 import type { Gateway } from "@/classes/gateway"
 import type { RESTManager } from "@/classes/rest-manager"
-import type { APIUser } from "@/discord-api"
+import type { APIUser } from "@/api"
 
 export interface ClientProps {
     gateway: Gateway

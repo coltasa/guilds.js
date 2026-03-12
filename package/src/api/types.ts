@@ -124,7 +124,7 @@ export interface APIChannel {
     icon?: string | null
     id: APISnowflake
     last_message_id?: APISnowflake | null
-    last_pin_timestamp?: APIISO8601Timestamp | null
+    last_pin_timestamp?: ISO8601Timestamp | null
     managed?: boolean
     member?: APIThreadMember
     member_count?: number
@@ -154,7 +154,9 @@ export type APIChannelDefaultForumLayout = ConstValues<
 >
 
 /** @see https://docs.discord.com/developers/resources/channel#channel-object-sort-order-types */
-export type APIChannelDefaultSortOrder = ConstValues<typeof APIChannelDefaultSortOrders>
+export type APIChannelDefaultSortOrder = ConstValues<
+    typeof APIChannelDefaultSortOrders
+>
 
 /** @see https://docs.discord.com/developers/resources/message#channel-mention-object */
 export interface APIChannelMention {
@@ -174,7 +176,9 @@ export interface APIChannelOverwrite {
 
 export type APIChannelOverwriteType = ConstValues<typeof APIChannelOverwriteTypes>
 export type APIChannelType = ConstValues<typeof APIChannelTypes>
-export type APIChannelVideoQualityMode = ConstValues<typeof APIChannelVideoQualityModes>
+export type APIChannelVideoQualityMode = ConstValues<
+    typeof APIChannelVideoQualityModes
+>
 
 /** @see https://docs.discord.com/developers/resources/user#collectibles */
 export interface APICollectibles {
@@ -191,7 +195,7 @@ export interface APIEmbed {
     image?: APIEmbedImage
     provider?: APIEmbedProvider
     thumbnail?: APIEmbedThumbnail
-    timestamp?: APIISO8601Timestamp
+    timestamp?: ISO8601Timestamp
     title?: string
     type?: APIEmbedType
     url?: string
@@ -329,7 +333,9 @@ export interface APIGuild {
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-guild-nsfw-level */
-export type APIGuildAgeRestrictionLevel = ConstValues<typeof APIGuildAgeRestrictionLevels>
+export type APIGuildAgeRestrictionLevel = ConstValues<
+    typeof APIGuildAgeRestrictionLevels
+>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-default-message-notification-level */
 export type APIGuildDefaultMessageNotificationLevel = ConstValues<
@@ -346,10 +352,10 @@ export type APIGuildFeature = (typeof APIGuildFeatures)[number]
 
 /** @see https://docs.discord.com/developers/resources/guild#incidents-data-object */
 export interface APIGuildIncidentsData {
-    dm_spam_detected_at?: APIISO8601Timestamp | null
-    dms_disabled_until: APIISO8601Timestamp | null
-    invites_disabled_until: APIISO8601Timestamp | null
-    raid_detected_at?: APIISO8601Timestamp | null
+    dm_spam_detected_at?: ISO8601Timestamp | null
+    dms_disabled_until: ISO8601Timestamp | null
+    invites_disabled_until: ISO8601Timestamp | null
+    raid_detected_at?: ISO8601Timestamp | null
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-member-object */
@@ -357,15 +363,15 @@ export interface APIGuildMember {
     avatar?: string | null
     avatar_decoration_data?: APIAvatarDecorationData | null
     banner?: string | null
-    communication_disabled_until?: APIISO8601Timestamp | null
+    communication_disabled_until?: ISO8601Timestamp | null
     deaf: boolean
     flags: number
-    joined_at: APIISO8601Timestamp | null
+    joined_at: ISO8601Timestamp | null
     mute: boolean
     nick?: string | null
     pending?: boolean
     permissions?: string
-    premium_since?: APIISO8601Timestamp | null
+    premium_since?: ISO8601Timestamp | null
     roles: APISnowflake[]
     user?: APIUser
 }
@@ -377,10 +383,14 @@ export type APIGuildMFALevel = ConstValues<typeof APIGuildMFALevels>
 export type APIGuildPremiumTier = ConstValues<typeof APIGuildPremiumTiers>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-system-channel-flags */
-export type APIGuildSystemChannelFlag = ConstValues<typeof APIGuildSystemChannelFlags>
+export type APIGuildSystemChannelFlag = ConstValues<
+    typeof APIGuildSystemChannelFlags
+>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-verification-level */
-export type APIGuildVerificationLevel = ConstValues<typeof APIGuildVerificationLevels>
+export type APIGuildVerificationLevel = ConstValues<
+    typeof APIGuildVerificationLevels
+>
 
 /** @see https://docs.discord.com/developers/resources/voice#voice-region-object */
 export interface APIGuildVoiceRegion {
@@ -408,9 +418,6 @@ export interface APIGuildWelcomeScreenChannel {
 /** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-type */
 export type APIInteractionType = ConstValues<typeof APIInteractionTypes>
 
-/** @see https://docs.discord.com/developers/reference#iso8601-date%2Ftime */
-export type APIISO8601Timestamp = string
-
 /** @see https://docs.discord.com/developers/resources/message#message-object */
 export interface APIMessage {
     activity?: APIMessageActivityType
@@ -421,7 +428,7 @@ export interface APIMessage {
     channel_id: APISnowflake
     components?: APIMessageComponent[]
     content: string
-    edited_timestamp: APIISO8601Timestamp | null
+    edited_timestamp: ISO8601Timestamp | null
     embeds: APIEmbed[]
     flags?: number
     id: APISnowflake
@@ -444,7 +451,7 @@ export interface APIMessage {
     sticker_items?: APIMessageStickerItem[]
     stickers?: APISticker[]
     thread?: APIChannel
-    timestamp: APIISO8601Timestamp
+    timestamp: ISO8601Timestamp
     tts: boolean
     type: APIMessageType
     webhook_id?: APISnowflake
@@ -456,7 +463,7 @@ export type APIMessageActivityType = ConstValues<typeof APIMessageActivityTypes>
 /** @see https://docs.discord.com/developers/resources/message#message-call-object */
 export interface APIMessageCall {
     participants: APISnowflake[]
-    ended_timestamp?: APIISO8601Timestamp | null
+    ended_timestamp?: ISO8601Timestamp | null
 }
 
 /** @see https://docs.discord.com/developers/components/reference#anatomy-of-a-component */
@@ -545,7 +552,7 @@ export type APINameplatePalette =
 export interface APIPoll {
     allow_multiselect: boolean
     answers: APIPollAnswer[]
-    expiry: APIISO8601Timestamp | null
+    expiry: ISO8601Timestamp | null
     layout_type: APIPollLayoutType
     question: APIPollMedia
     results?: APIPollResults
@@ -699,17 +706,17 @@ export type APITeamMemberRoleType = ConstValues<typeof APITeamMemberRoleTypes>
 export interface APIThreadMember {
     flags: number
     id?: APISnowflake
-    join_timestamp: APIISO8601Timestamp
+    join_timestamp: ISO8601Timestamp
     member?: APIGuildMember
     user_id?: APISnowflake
 }
 
 /** @see https://docs.discord.com/developers/resources/channel#thread-metadata-object */
 export interface APIThreadMetadata {
-    archive_timestamp: APIISO8601Timestamp
+    archive_timestamp: ISO8601Timestamp
     archived: boolean
     auto_archive_duration: APIChannelAutoArchiveDuration
-    create_timestamp?: APIISO8601Timestamp | null
+    create_timestamp?: ISO8601Timestamp | null
     invitable?: boolean
     locked: boolean
 }
@@ -759,3 +766,6 @@ export type APIWebhookEventType =
     | "LOBBY_MESSAGE_DELETE"
     | "LOBBY_MESSAGE_UPDATE"
     | "QUEST_USER_ENROLLMENT"
+
+/** @see https://docs.discord.com/developers/reference#iso8601-date%2Ftime */
+export type ISO8601Timestamp = string

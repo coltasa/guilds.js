@@ -12,5 +12,5 @@ export default defineConfig({
     removeNodeProtocol: false,
     shims: true,
     skipNodeModulesBundle: true,
-    target: "node20",
+    target: "node22",
 })

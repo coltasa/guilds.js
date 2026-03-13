@@ -9,7 +9,7 @@
 <div align="center">
   <a href="https://guilds.js.org/">Docs</a> | 
   <a href="https://github.com/guildsjs/guilds.js/">GitHub</a> | 
-  <a href="https://npmjs.com/package/guilds.js/">npm</a>
+  <a href="https://npmjs.com/package/create-guilds.js/">npm</a>
 </div>
 <h1 align="center">create-guilds.js</h1>
 

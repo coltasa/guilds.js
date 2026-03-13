@@ -1,0 +1,49 @@
+{
+    "name": "create-guilds.js",
+    "description": "Start a new guilds.js project with ease",
+    "homepage": "https://guilds.js.org",
+    "version": "0.0.0",
+    "license": "UNLICENSED",
+    "scripts": {
+        "build": "tsdown",
+        "format": "prettier --write . --config ../../package.json --ignore-path ../../.prettierignore",
+        "lint": "tsc --noEmit; prettier --check . --config ../../package.json --ignore-path ../../.prettierignore",
+        "prepublish": "tsdown"
+    },
+    "main": "./dist/index.cjs",
+    "bin": "./dist/index.cjs",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/andrewdku/guilds.js"
+    },
+    "private": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@types/node": "^25.3.3",
+        "prettier": "^3.8.1",
+        "tsdown": "^0.20.3",
+        "typescript": "^5.9.3"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ],
+    "keywords": [
+        "create",
+        "discord",
+        "discord-bot",
+        "guilds",
+        "guilds.js",
+        "init",
+        "javascript",
+        "template",
+        "typescript"
+    ],
+    "engines": {
+        "node": ">=22"
+    }
+}

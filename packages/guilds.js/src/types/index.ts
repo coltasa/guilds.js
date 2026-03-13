@@ -1,6 +1,7 @@
 import type { Gateway } from "@/classes/gateway"
 import type { RESTManager } from "@/classes/rest-manager"
 import type { GuildMember, Message, Snowflake, User } from "@/api"
+import type { GatewayIntents, PermissionFlags } from "@/constants"
 
 export interface ClientProps {
     gateway: Gateway
@@ -45,6 +46,8 @@ export interface GatewayEvents {
     WS_ERROR: string
 }
 
+export type GatewayIntent = ConstValues<typeof GatewayIntents>
+
 export interface GatewayProps {
     intents: number
     rest: RESTManager
@@ -52,6 +55,7 @@ export interface GatewayProps {
 }
 
 export type HTTPMethod = "DELETE" | "GET" | "PATCH" | "POST" | "PUT"
+export type PermissionFlag = ConstValues<typeof PermissionFlags>
 
 export interface RESTManagerProps {
     token: string

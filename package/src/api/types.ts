@@ -1,5 +1,7 @@
 import type { ConstValues } from "@/types"
 import type {
+    APIApplicationCommandOptionTypes,
+    APIApplicationCommandTypes,
     APIApplicationEventWebhookStatuses,
     APIApplicationInstallParamScopes,
     APIApplicationIntegrationTypes,
@@ -9,6 +11,7 @@ import type {
     APIChannelTypes,
     APIChannelVideoQualityModes,
     APIEmbedTypes,
+    APIEntitlementTypes,
     APIGuildAgeRestrictionLevels,
     APIGuildDefaultMessageNotificationLevels,
     APIGuildExplicitContentFilterLevels,
@@ -17,7 +20,9 @@ import type {
     APIGuildPremiumTiers,
     APIGuildSystemChannelFlags,
     APIGuildVerificationLevels,
+    APIInteractionContextTypes,
     APIInteractionTypes,
+    APILocales,
     APIMessageActivityTypes,
     APIMessageComponentTypes,
     APIMessageReferenceTypes,
@@ -64,6 +69,32 @@ export interface APIApplication {
     custom_install_url?: string
 }
 
+/** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
+export interface APIApplicationCommandData {
+    guild_id?: APISnowflake
+    id: APISnowflake
+    name: string
+    options: APIApplicationCommandInteractionDataOption[]
+    resolved?: APIResolved
+    target_id?: APISnowflake
+    type: APIApplicationCommandType
+}
+
+/** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
+export interface APIApplicationCommandInteractionDataOption {
+    focused?: boolean
+    name: string
+    options?: APIApplicationCommandInteractionDataOption[]
+    type: APIApplicationCommandOptionType
+    value?: string | number | boolean
+}
+
+export type APIApplicationCommandOptionType = ConstValues<
+    typeof APIApplicationCommandOptionTypes
+>
+
+export type APIApplicationCommandType = ConstValues<typeof APIApplicationCommandTypes>
+
 /** @see https://docs.discord.com/developers/resources/application#application-object-application-event-webhook-status */
 export type APIApplicationEventWebhookStatus = ConstValues<
     typeof APIApplicationEventWebhookStatuses
@@ -101,6 +132,10 @@ export interface APIAttachment {
     waveform?: string
     width?: number | null
 }
+
+export type APIAuthorizingIntegrationOwners = Partial<
+    Record<APIApplicationIntegrationType, APISnowflake>
+>
 
 /** @see https://docs.discord.com/developers/resources/user#avatar-decoration-data-object */
 export interface APIAvatarDecorationData {
@@ -154,9 +189,7 @@ export type APIChannelDefaultForumLayout = ConstValues<
 >
 
 /** @see https://docs.discord.com/developers/resources/channel#channel-object-sort-order-types */
-export type APIChannelDefaultSortOrder = ConstValues<
-    typeof APIChannelDefaultSortOrders
->
+export type APIChannelDefaultSortOrder = ConstValues<typeof APIChannelDefaultSortOrders>
 
 /** @see https://docs.discord.com/developers/resources/message#channel-mention-object */
 export interface APIChannelMention {
@@ -176,9 +209,7 @@ export interface APIChannelOverwrite {
 
 export type APIChannelOverwriteType = ConstValues<typeof APIChannelOverwriteTypes>
 export type APIChannelType = ConstValues<typeof APIChannelTypes>
-export type APIChannelVideoQualityMode = ConstValues<
-    typeof APIChannelVideoQualityModes
->
+export type APIChannelVideoQualityMode = ConstValues<typeof APIChannelVideoQualityModes>
 
 /** @see https://docs.discord.com/developers/resources/user#collectibles */
 export interface APICollectibles {
@@ -269,6 +300,23 @@ export interface APIEmoji {
     user?: APIUser
 }
 
+/** @see https://docs.discord.com/developers/resources/entitlement#entitlement-object */
+export interface APIEntitlement {
+    application_id: APISnowflake
+    consumed?: boolean
+    deleted: boolean
+    ends_at: ISO8601Timestamp | null
+    guild_id?: APISnowflake
+    id: APISnowflake
+    sku_id: APISnowflake
+    starts_at: ISO8601Timestamp | null
+    type: APIEntitlementType
+    user_id?: APISnowflake
+}
+
+/** @see https://docs.discord.com/developers/resources/entitlement#entitlement-object-entitlement-types */
+export type APIEntitlementType = ConstValues<typeof APIEntitlementTypes>
+
 /** @see https://docs.discord.com/developers/resources/channel#default-reaction-object */
 export interface APIForumDefaultReaction {
     emoji_id: APISnowflake | null
@@ -312,7 +360,7 @@ export interface APIGuild {
     owner?: boolean
     owner_id: APISnowflake
     permissions?: string
-    preferred_locale: string
+    preferred_locale: APILocale
     premium_progress_bar_enabled: boolean
     premium_subscription_count?: number
     premium_tier: APIGuildPremiumTier
@@ -333,9 +381,7 @@ export interface APIGuild {
 }
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-guild-nsfw-level */
-export type APIGuildAgeRestrictionLevel = ConstValues<
-    typeof APIGuildAgeRestrictionLevels
->
+export type APIGuildAgeRestrictionLevel = ConstValues<typeof APIGuildAgeRestrictionLevels>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-default-message-notification-level */
 export type APIGuildDefaultMessageNotificationLevel = ConstValues<
@@ -383,14 +429,10 @@ export type APIGuildMFALevel = ConstValues<typeof APIGuildMFALevels>
 export type APIGuildPremiumTier = ConstValues<typeof APIGuildPremiumTiers>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-system-channel-flags */
-export type APIGuildSystemChannelFlag = ConstValues<
-    typeof APIGuildSystemChannelFlags
->
+export type APIGuildSystemChannelFlag = ConstValues<typeof APIGuildSystemChannelFlags>
 
 /** @see https://docs.discord.com/developers/resources/guild#guild-object-verification-level */
-export type APIGuildVerificationLevel = ConstValues<
-    typeof APIGuildVerificationLevels
->
+export type APIGuildVerificationLevel = ConstValues<typeof APIGuildVerificationLevels>
 
 /** @see https://docs.discord.com/developers/resources/voice#voice-region-object */
 export interface APIGuildVoiceRegion {
@@ -415,8 +457,40 @@ export interface APIGuildWelcomeScreenChannel {
     emoji_name: string
 }
 
+/** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object */
+export interface APIInteraction {
+    app_permissions: string
+    application_id: APISnowflake
+    attachment_size_limit: number
+    authorizing_integration_owners: APIAuthorizingIntegrationOwners
+    channel?: Partial<APIChannel>
+    context?: APIInteractionContextType
+    data?: APIInteractionData
+    entitlements: APIEntitlement[]
+    guild?: Partial<APIGuild>
+    guild_id?: APISnowflake
+    guild_locale?: APILocale
+    id: APISnowflake
+    locale?: APILocale
+    member?: APIGuildMember
+    message?: APIMessage
+    token: string
+    type: APIInteractionType
+    user?: APIUser
+    version: 1 | (number & {})
+}
+
+/** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-context-types */
+export type APIInteractionContextType = ConstValues<typeof APIInteractionContextTypes>
+
+/** @see  */
+export interface APIInteractionData {}
+
 /** @see https://docs.discord.com/developers/interactions/receiving-and-responding#interaction-object-interaction-type */
 export type APIInteractionType = ConstValues<typeof APIInteractionTypes>
+
+/** @see https://docs.discord.com/developers/reference#locales */
+export type APILocale = ConstValues<typeof APILocales> | (string & {})
 
 /** @see https://docs.discord.com/developers/resources/message#message-object */
 export interface APIMessage {
@@ -486,7 +560,7 @@ export interface APIMessageInteraction {
 
 /** @see https://docs.discord.com/developers/resources/message#message-interaction-metadata-object */
 export interface APIMessageInteractionMetadata {
-    authorizing_integration_owners: APIMessageInteractionMetadataAuthorizingIntegrationOwners
+    authorizing_integration_owners: APIAuthorizingIntegrationOwners
     id: APISnowflake
     original_response_message_id?: APISnowflake
     target_message_id?: APISnowflake
@@ -494,10 +568,6 @@ export interface APIMessageInteractionMetadata {
     type: APIInteractionType
     user: APIUser
 }
-
-export type APIMessageInteractionMetadataAuthorizingIntegrationOwners = Partial<
-    Record<APIApplicationIntegrationType, APISnowflake>
->
 
 /** @see https://docs.discord.com/developers/resources/message#message-reference-structure */
 export interface APIMessageReference {

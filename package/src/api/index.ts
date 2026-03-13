@@ -1,5 +1,26 @@
 export type * from "@/api/types"
 
+export const APIApplicationCommandTypes = {
+    CHAT_INPUT: 1,
+    MESSAGE: 3,
+    PRIMARY_ENTRY_POINT: 4,
+    USER: 2,
+} as const
+
+export const APIApplicationCommandOptionTypes = {
+    ATTACHMENT: 11,
+    BOOLEAN: 5,
+    CHANNEL: 7,
+    INTEGER: 4,
+    MENTIONABLE: 9,
+    NUMBER: 10,
+    ROLE: 8,
+    STRING: 3,
+    SUB_COMMAND: 1,
+    SUB_COMMAND_GROUP: 2,
+    USER: 6,
+} as const
+
 export const APIApplicationEventWebhookStatuses = {
     DISABLED: 1,
     DISABLED_BY_DISCORD: 3,
@@ -89,6 +110,17 @@ export const APIEmbedTypes = [
     "video",
 ] as const
 
+export const APIEntitlementTypes = {
+    APPLICATION_SUBSCRIPTION: 8,
+    DEVELOPER_GIFT: 3,
+    FREE_PURCHASE: 5,
+    PREMIUM_PURCHASE: 7,
+    PREMIUM_SUBSCRIPTION: 2,
+    PURCHASE: 1,
+    TEST_MODE_PURCHASE: 4,
+    USER_GIFT: 6,
+} as const
+
 export const APIGuildAgeRestrictionLevels = {
     AGE_RESTRICTED: 3,
     DEFAULT: 0,
@@ -171,12 +203,53 @@ export const APIGuildVerificationLevels = {
     VERY_HIGH: 4,
 } as const
 
+export const APIInteractionContextTypes = {
+    BOT_DM: 1,
+    GUILD: 0,
+    PRIVATE_CHANNEL: 2,
+} as const
+
 export const APIInteractionTypes = {
     APPLICATION_COMMAND: 2,
     APPLICATION_COMMAND_AUTOCOMPLETE: 4,
     MESSAGE_COMPONENT: 3,
     MODAL_SUBMIT: 4,
     PING: 1,
+} as const
+
+export const APILocales = {
+    BULGARIAN: "bg",
+    CHINESE_CHINA: "zh-CN",
+    CHINESE_TAIWAN: "zh-TW",
+    CROATIAN: "hr",
+    CZECH: "cs",
+    DANISH: "da",
+    DUTCH: "nl",
+    ENGLISH_UK: "en-GB",
+    ENGLISH_US: "en-US",
+    FINNISH: "fi",
+    FRENCH: "fr",
+    GERMAN: "de",
+    GREEK: "el",
+    HINDI: "hi",
+    HUNGARIAN: "hu",
+    INDONESIAN: "id",
+    ITALIAN: "it",
+    JAPANESE: "ja",
+    KOREAN: "ko",
+    LITHUANIAN: "lt",
+    NORWEGIAN: "no",
+    POLISH: "pl",
+    PORTUGUESE_BRAZILIAN: "pt-BR",
+    ROMANIAN: "ro",
+    RUSSIAN: "ru",
+    SPANISH: "es-ES",
+    SPANISH_LATAM: "es-419",
+    SWEDISH: "sv-SE",
+    THAI: "th",
+    TURKISH: "tr",
+    UKRAINIAN: "uk",
+    VIETNAMESE: "vi",
 } as const
 
 export const APIMessageActivityTypes = {

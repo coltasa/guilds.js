@@ -6,7 +6,7 @@ import { parseToken } from "@/functions/parse-token"
 export class RESTManager {
     #token: string
 
-    /** Client token used for authorization */
+    /** Bot token used for authorization */
     public get token() {
         return this.#token
     }

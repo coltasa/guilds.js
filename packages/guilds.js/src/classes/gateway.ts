@@ -11,7 +11,7 @@ export class Gateway {
     /** Event handler for gateway dispatch events */
     public events = new EventHandler<GatewayEventMap>()
 
-    /** Client intents bitfield */
+    /** Intents bitfield */
     public intents: number
 
     /** Used for REST API calls */
@@ -20,7 +20,7 @@ export class Gateway {
     /** WebSocket for connecting to Discord's gateway */
     public ws?: WebSocket
 
-    /** Client token used for authorization */
+    /** Bot token used for authorization */
     public get token() {
         return this.#token
     }

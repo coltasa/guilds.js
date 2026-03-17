@@ -3,11 +3,6 @@ import type { RESTManager } from "@/classes/rest-manager"
 import type { GuildMember, Message, Snowflake, User } from "@/api"
 import type { GatewayIntents, PermissionFlags } from "@/constants"
 
-export interface ClientProps {
-    gateway: Gateway
-    rest: RESTManager
-}
-
 export type GatewayEventMap = {
     [K in keyof GatewayEvents]: [
         event: {

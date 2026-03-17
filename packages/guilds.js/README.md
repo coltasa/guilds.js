@@ -34,18 +34,17 @@ bun add guilds.js
 You can find more examples and guides [here](https://guilds.js.org/guide/getting-started/).
 
 ```js
-import { Client, Gateway, RESTManager } from "guilds.js"
+import { Gateway, RESTManager } from "guilds.js"
 
 const token = process.env.DISCORD_TOKEN
 const rest = new RESTManager({ token })
 const gateway = new Gateway({ rest, token, intents: 515 })
-const client = new Client({ gateway, rest })
 
-client.gateway.events.on("READY", ({ data, gateway, rest }) => {
+gateway.events.on("READY", ({ data, gateway, rest }) => {
     console.log(`Connected to Discord as ${data.user.username}!`)
 })
 
-client.gateway.connect()
+gateway.connect()
 ```
 
 ## License

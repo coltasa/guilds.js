@@ -1,0 +1,43 @@
+name: Development Build
+
+on:
+    schedule:
+        - cron: "0 0 */2 * *"
+    workflow_dispatch:
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: "10"
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: https://registry.npmjs.org/
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Generate development version
+              id: version
+              run: node ./scripts/dev-build/gen-version.mjs
+
+            - name: Deprecate previous dev version
+              run: node ./scripts/dev-build/deprecate.mjs
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish package
+              working-directory: packages/guilds.js/
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: pnpm publish --tag dev --access public --no-git-checks

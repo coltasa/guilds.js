@@ -8,6 +8,7 @@ export default defineConfig({
     format: "cjs",
     minify: false,
     name: "guilds.js",
+    outDir: "dist",
     platform: "node",
     removeNodeProtocol: false,
     shims: true,

@@ -19,11 +19,9 @@ guilds.js is a Node.js library for using Discord's API and gateway.
 
 This monorepo houses both the documentation site and the npm library for guilds.js.
 
-- **`docs/`**: Contains the source of the [documentation site](https://guilds.js.org). Everything under `src/content/docs/api/` is an automatically generated folder for API references.
-
-- **`packages/create-guilds.js/`**: Contains the source code of the [create-guilds.js CLI](https://npmjs.com/package/create-guilds.js).
-
-- **`packages/guilds.js/`**: Contains the source code of the main [npm package](https://npmjs.com/package/guilds.js).
+- [documentation](./docs/)
+- [guilds.js](./packages/guilds.js/)
+- [create-guilds.js](./packages/create-guilds.js/)
 
 ## Contributing
 

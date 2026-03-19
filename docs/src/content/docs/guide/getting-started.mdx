@@ -3,4 +3,161 @@ title: Getting Started
 prev: false
 ---
 
-Coming soon...
+import { Aside, TabItem, Tabs } from "@astrojs/starlight/components"
+
+Welcome! Before creating your very own bot, you'll need the following:
+
+- Node.js (version 22 or higher)
+- VSCode (or another code editor)
+- A Discord bot user (see below)
+
+## Creating the bot user
+
+1. Head to https://discord.com/developers/applications and press **New Application**.
+   Give your bot any name you'd like, then press the Create button.
+
+<div align="center">
+    <img
+        src="https://j7oyzrlowjq7eyu0.public.blob.vercel-storage.com/bot-user-create-fPoHNHNpG6M6hpEElJYGIPcKGos5Qs.png"
+        width="450"
+    />
+</div>
+
+2. In the **Installation** section, disable **User Install** and set **Install Link**
+   to **None**. This is because this bot is designed to work in servers (guilds), not to
+   be installed to user profiles and used anywhere, for example.
+
+<div align="center">
+    <img
+        src="https://j7oyzrlowjq7eyu0.public.blob.vercel-storage.com/bot-installation-FzORG2xvXwpePvZeSm4vjrSzcajXHh.png"
+        width="700"
+    />
+</div>
+
+3. In the **Bot** section, disable **Public Bot** (recommended, especially if your
+   bot is only intended to be in no more than just a handful of servers), and enable
+   the Server Members intent, and Message Content if you plan to work with messages.
+   Intents allow you to receive specific gateway events and access certain data. Then,
+   press **Reset Token** and copy it. Keep this token somewhere secure for now.
+
+<Aside type="tip">
+    Discord "applications" aren't bots. Applications are meant for wider purposes, such as
+    authenticating with Discord and other purposes. You can think of an application as a
+    container for your bot.
+</Aside>
+
+<Aside type="danger">
+    Bot tokens let you control bots. Thus, you can think of it like a "password" for your
+    bot. You should *never* share this token anywhere or with anyone.
+</Aside>
+
+<div align="center">
+    <img
+        src="https://j7oyzrlowjq7eyu0.public.blob.vercel-storage.com/bot-config-GWvvhZzhxVPvWFCRCC9Cx2qykDnaKQ.png"
+        width="700"
+    />
+</div>
+
+4. Invite your bot to your Discord server: head to the **OAuth2** section, scroll down to
+   **OAuth2 URL Generator** then select `bot` and `applications.commands` (for slash commands),
+   followed by the permissions your bot needs. For simple testing purposes, you can choose
+   Administrator so you don't encounter permission issues, but you should tweak these
+   permissions later on depending on your bot's purpose. Then, visit the link and select
+   your target server.
+
+<div align="center">
+    <img
+        src="https://j7oyzrlowjq7eyu0.public.blob.vercel-storage.com/bot-oauth2-XPsSEG158sVEA8xa9kf6sDzgCa0tdw.png"
+        width="700"
+    />
+</div>
+
+## Coding the bot
+
+Create a new folder, then open it in your preferred code editor. Initialize a new npm project
+using the following command:
+
+```bash
+npm init -y
+```
+
+Then, update the `main` field in the `package.json` file to `src/index.js` - you don't have
+to keep your bot's source code in the `src/` directory, but it's much preferred. You should
+also set `type` to `module`.
+
+Create your `index.js` file in the `src/` folder, and create a file named `.env` in the root
+directory of your folder (in the same folder as `package.json`, not in the `src/` folder).
+
+<Aside type="tip">
+    It's highly recommended to create a `.gitignore` file and add `.env` to it, as well as
+    other files or folders that should not be committed to Git, such as `node_modules/`.
+</Aside>
+
+In the `scripts` section of the `package.json` file, add the `start` script which runs
+`node .` (this is optional, but recommended)
+
+Now, we can install `guilds.js` and `dotenv` with the following command:
+
+```bash
+npm install guilds.js dotenv
+```
+
+Add your bot token to the `.env` file:
+
+```
+DISCORD_TOKEN=your-bot-token-here
+```
+
+Now, add the following code to your `src/index.js` file:
+
+```js
+import { Gateway, GatewayIntents, RESTManager } from "guilds.js"
+import "dotenv/config"
+
+const token = process.env.DISCORD_TOKEN
+
+const rest = new RESTManager({ token })
+const gateway = new Gateway({
+    rest,
+    token,
+    intents:
+        GatewayIntents.GUILDS |
+        GatewayIntents.GUILD_MEMBERS |
+        GatewayIntents.GUILD_MESSAGES,
+})
+
+gateway.events.on("READY", ({ data }) => {
+    console.log(`Connected to Discord as ${data.user.username}!`)
+})
+
+gateway.connect()
+```
+
+Here's what your folder structure should look like:
+
+```
+example-bot
+├── node_modules
+├── .env
+├── package-lock.json
+├── package.json
+└── src
+    └── index.js
+```
+
+## Running the bot
+
+Run your bot with the following command:
+
+```bash
+npm run start
+```
+
+Your terminal should output something like this:
+
+```
+Connected to Discord as Example!
+```
+
+Your bot is now up and running. You can now explore the rest of this guide and use the API
+reference to help you along your journey!

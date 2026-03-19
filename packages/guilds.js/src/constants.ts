@@ -24,6 +24,44 @@ export const GatewayIntents = {
     MESSAGE_CONTENT: 1 << 15,
 } as const
 
+export const GatewayOpcodes = {
+    /** Receive */
+    Dispatch: 0,
+
+    /** Send or Receive */
+    Heartbeat: 1,
+
+    /** Receive */
+    HeartbeatACK: 11,
+
+    /** Receive */
+    Hello: 10,
+
+    /** Send */
+    Identify: 2,
+
+    /** Receive */
+    InvalidSession: 9,
+
+    /** Send */
+    PresenceUpdate: 3,
+
+    /** Receive */
+    Reconnect: 7,
+
+    /** Send */
+    RequestGuildMembers: 8,
+
+    /** Send */
+    RequestSoundboardSounds: 12,
+
+    /** Send */
+    Resume: 6,
+
+    /** Send */
+    VoiceStateUpdate: 3,
+} as const
+
 export const PermissionFlags = {
     ADD_REACTIONS: 1 << 6,
     ADMINISTRATOR: 1 << 3,
